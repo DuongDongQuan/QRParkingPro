@@ -30,7 +30,7 @@ import com.example.qrparkingpro.R
 fun HomeBottomBar(navController: NavController) {
     BottomAppBar(
         backgroundColor = Color(0xFFF1F1F1), // Màu nền của BottomBar
-        elevation = 8.dp, // Độ bóng của BottomBar
+        elevation = 20.dp, // Độ bóng của BottomBar
 
     ) {
         Row(
@@ -45,6 +45,9 @@ fun HomeBottomBar(navController: NavController) {
                 label = "Home",
                 isSelected = false,
                 onClick = { /* Navigate to Home */ }
+            )
+            Text(
+                text = "Home"
             )
             Spacer(modifier = Modifier.width(24.dp)) // Khoảng cách giữa các mục
             BottomNavigationItem(
