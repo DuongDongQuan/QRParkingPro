@@ -44,7 +44,7 @@ fun TopBar(navController: NavController, title: String) {
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
-                    fontSize = 25.sp,
+                    fontSize = 30.sp,
                     modifier = Modifier.align(Alignment.Center)
                 )
             }

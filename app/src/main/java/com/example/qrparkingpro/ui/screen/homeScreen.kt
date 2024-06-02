@@ -115,11 +115,11 @@ fun HomeScreen(navController: NavController) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 0.dp), // Điều chỉnh padding ngang
+                            .padding(horizontal = 0.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.hide), // Thay bằng biểu tượng VISA của bạn
+                            painter = painterResource(id = R.drawable.hide),
                             contentDescription = "HIDE",
                             modifier = Modifier.size(24.dp)
                         )
@@ -128,21 +128,21 @@ fun HomeScreen(navController: NavController) {
                             text = "100$",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.align(Alignment.CenterVertically) // Đảm bảo text nằm chính giữa
+                            modifier = Modifier.align(Alignment.CenterVertically)
                         )
                         Spacer(modifier = Modifier.width(150.dp))
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center // Đảm bảo nội dung nằm chính giữa
+                            horizontalArrangement = Arrangement.Center
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.visa), // Thay bằng biểu tượng VISA của bạn
+                                painter = painterResource(id = R.drawable.visa),
                                 contentDescription = "VISA",
                                 modifier = Modifier.size(40.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Icon(
-                                painter = painterResource(id = R.drawable.paypal), // Thay bằng biểu tượng PayPal của bạn
+                                painter = painterResource(id = R.drawable.paypal),
                                 contentDescription = "PayPal",
                                 modifier = Modifier.size(25.dp)
                             )

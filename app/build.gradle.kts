@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    kotlin("plugin.parcelize")
 }
 
 android {
@@ -104,4 +105,5 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
     implementation("com.google.code.gson:gson:2.8.6")
     implementation("androidx.navigation:navigation-compose:2.4.0-beta02")
+    implementation("org.jetbrains.kotlin:kotlin-parcelize-runtime:1.8.0")
 }
