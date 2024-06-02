@@ -27,9 +27,7 @@ fun TopBar(navController: NavController, title: String) {
             elevation = 0.dp,
             modifier = Modifier.fillMaxSize()
         ) {
-            // Sử dụng Box để chứa các thành phần trong TopAppBar
             Box(modifier = Modifier.fillMaxSize()) {
-                // Nút điều hướng nằm bên trái
                 IconButton(
                     onClick = { navController.popBackStack() },
                     modifier = Modifier.align(Alignment.CenterStart)
@@ -41,7 +39,6 @@ fun TopBar(navController: NavController, title: String) {
                     )
                 }
 
-                // Tiêu đề nằm chính giữa
                 Text(
                     text = title,
                     color = Color.White,
