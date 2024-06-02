@@ -88,7 +88,7 @@ fun HomeScreen(navController: NavController) {
                             Spacer(modifier = Modifier.width(8.dp)) // Khoảng cách giữa hai phần tử
                             Box(
                                 modifier = Modifier
-                                    .background(Color.Green, RoundedCornerShape(4.dp))
+                                    .background(Color.Green, RoundedCornerShape(8.dp))
                                     .padding(horizontal = 8.dp, vertical = 4.dp)
                                     .align(Alignment.CenterVertically) // Đảm bảo box nằm chính giữa
                             ) {
@@ -123,14 +123,14 @@ fun HomeScreen(navController: NavController) {
                             contentDescription = "HIDE",
                             modifier = Modifier.size(24.dp)
                         )
-
+                        Spacer(modifier = Modifier.width(10.dp))
                         Text(
                             text = "100$",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.align(Alignment.CenterVertically) // Đảm bảo text nằm chính giữa
                         )
-                        Spacer(modifier = Modifier.width(170.dp))
+                        Spacer(modifier = Modifier.width(150.dp))
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center // Đảm bảo nội dung nằm chính giữa
@@ -195,7 +195,7 @@ fun HomeScreen(navController: NavController) {
                 Text(
                     text = "Registered license plate",
                     fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
+                    fontSize = 20.sp,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.padding(4.dp)
                 )
@@ -210,8 +210,8 @@ fun HomeScreen(navController: NavController) {
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Text("Vehicle", fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                        Text("Vehicle No*", fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                        Text("Vehicle", fontWeight = FontWeight.Bold, fontSize = 19.sp)
+                        Text("Vehicle No*", fontWeight = FontWeight.Bold, fontSize = 19.sp)
                     }
                     Divider(color = GreyLine, thickness = 1.dp)
                     Spacer(modifier = Modifier.height(6.dp))
