@@ -8,4 +8,4 @@ val GreyLine = Color(0xFFB8B8B8)
 
 val GreyText = Color(0xFF6C757D)
 val White = Color(0xFFFFFFFF)
-val Green = Color(0xFF60D936)
+val GreenText = Color(0xFF60D936)

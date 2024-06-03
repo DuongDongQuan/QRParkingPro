@@ -30,6 +30,7 @@ import com.example.vehicleplate.ui.theme.GreyLine
 
 @Composable
 fun HomeScreen(navController: NavController) {
+    val GreenText = Color(0xFF60D936)
     Scaffold(
         bottomBar = { HomeBottomBar(navController = navController) }
     ) { innerPadding ->
@@ -42,28 +43,29 @@ fun HomeScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(15.dp)
-                    .padding(top = 25.dp)
+                    .padding(top = 20.dp)
             ) {
                 // Profile section
                 Box(
                     modifier = Modifier
                         .background(Color.White, shape = RoundedCornerShape(18.dp))
-                        .shadow(4.dp, shape = RoundedCornerShape(20.dp))
-                        .padding(horizontal = 20.dp, vertical = 9.dp), // Chỉ định padding để điều chỉnh kích thước của Box
-                    contentAlignment = Alignment.Center // Căn giữa nội dung bên trong Box
+                        .border(width = 0.1.dp, color = Color.Gray, shape = RoundedCornerShape(20.dp))
+//                        .shadow(2.dp, shape = RoundedCornerShape(20.dp))
+                        .padding(horizontal = 15.dp, vertical = 11.dp),
+                    contentAlignment = Alignment.Center
                 ) {
                     Column(
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Box(
                             modifier = Modifier
-                                .size(130.dp) // Điều chỉnh phần offset để ảnh đại diện nằm một phần bên ngoài
+                                .size(130.dp)
                                 .align(Alignment.CenterHorizontally)
                                 .clip(CircleShape)
                                 .padding(horizontal = 9.dp, vertical = 9.dp)
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.user), // URL của ảnh đại diện
+                                painter = painterResource(id = R.drawable.user),
                                 contentDescription = "Profile Picture",
                                 modifier = Modifier.size(130.dp)
                             )
@@ -72,7 +74,7 @@ fun HomeScreen(navController: NavController) {
                             text = "BRIAN DUONG",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.align(Alignment.CenterHorizontally) // Đảm bảo tiêu đề nằm chính giữa
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
                         )
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -83,16 +85,16 @@ fun HomeScreen(navController: NavController) {
                                 text = "0707405997",
                                 fontSize = 16.sp,
                                 color = Color.Gray,
-                                modifier = Modifier.align(Alignment.CenterVertically) // Đảm bảo text nằm chính giữa
+                                modifier = Modifier.align(Alignment.CenterVertically)
                             )
-                            Spacer(modifier = Modifier.width(8.dp)) // Khoảng cách giữa hai phần tử
+                            Spacer(modifier = Modifier.width(8.dp))
                             Box(
                                 modifier = Modifier
-                                    .background(Color.Green, RoundedCornerShape(8.dp))
+                                    .background(GreenText, RoundedCornerShape(8.dp))
                                     .padding(horizontal = 8.dp, vertical = 4.dp)
                                     .align(Alignment.CenterVertically) // Đảm bảo box nằm chính giữa
                             ) {
-                                Text(text = "Verified", color = Color.White, textAlign = TextAlign.Center)
+                                Text(text = "Verified", color = Color.White, textAlign = TextAlign.Center, fontWeight = FontWeight.Medium)
                             }
                         }
                     }
@@ -115,11 +117,11 @@ fun HomeScreen(navController: NavController) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 0.dp), // Điều chỉnh padding ngang
+                            .padding(horizontal = 0.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            painter = painterResource(id = R.drawable.hide), // Thay bằng biểu tượng VISA của bạn
+                            painter = painterResource(id = R.drawable.hide),
                             contentDescription = "HIDE",
                             modifier = Modifier.size(24.dp)
                         )
@@ -128,21 +130,21 @@ fun HomeScreen(navController: NavController) {
                             text = "100$",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.align(Alignment.CenterVertically) // Đảm bảo text nằm chính giữa
+                            modifier = Modifier.align(Alignment.CenterVertically)
                         )
                         Spacer(modifier = Modifier.width(150.dp))
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center // Đảm bảo nội dung nằm chính giữa
+                            horizontalArrangement = Arrangement.Center
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.visa), // Thay bằng biểu tượng VISA của bạn
+                                painter = painterResource(id = R.drawable.visa),
                                 contentDescription = "VISA",
                                 modifier = Modifier.size(40.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Icon(
-                                painter = painterResource(id = R.drawable.paypal), // Thay bằng biểu tượng PayPal của bạn
+                                painter = painterResource(id = R.drawable.paypal),
                                 contentDescription = "PayPal",
                                 modifier = Modifier.size(25.dp)
                             )

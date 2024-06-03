@@ -86,63 +86,6 @@ fun HistoryScreen(navController: NavController) {
     }
 }
 
-//@Composable
-//fun HistoryListItem(item: HistoryItem) {
-//    Column(modifier = Modifier
-//        .fillMaxWidth()
-//        .padding(16.dp)) {
-//        Row(verticalAlignment = Alignment.CenterVertically) {
-//            Icon(
-//                painter = painterResource(id = R.drawable.top_up),
-//                contentDescription = null,
-//                tint = Color.Blue,
-//                modifier = Modifier.size(40.dp).padding(end = 16.dp)
-//            )
-//            Column {
-//                Text(text = item.description, fontWeight = FontWeight.Bold)
-//                Text(text = item.date, color = Color.Gray, fontSize = 12.sp)
-//                Text(text = item.balance, color = Color.Gray, fontSize = 12.sp)
-//            }
-//            Spacer(modifier = Modifier.weight(1f))
-//            Text(
-//                text = item.amount,
-//                color = if (item.isIncome) Color.Green else Color.Red,
-//                fontWeight = FontWeight.Bold,
-//                fontSize = 16.sp
-//            )
-//        }
-//        Divider(modifier = Modifier.padding(vertical = 8.dp))
-//    }
-//}
-//@Composable
-//fun HistoryListItem(item: HistoryItem) {
-//    Column(modifier = Modifier
-//        .fillMaxWidth()
-//        .padding(horizontal = 16.dp, vertical = 8.dp)) {
-//        Row(verticalAlignment = Alignment.CenterVertically) {
-//            Icon(
-//                painter = painterResource(id = R.drawable.top_up),
-//                contentDescription = null,
-//                tint = Color.Blue,
-//                modifier = Modifier.size(40.dp).padding(end = 16.dp)
-//            )
-//            Column {
-//                Text(text = item.description, fontWeight = FontWeight.Bold, fontSize = 17.sp)
-//                Text(text = item.date, color = Color.Gray, fontSize = 12.sp)
-//                Text(text = item.balance, color = Color.Gray, fontSize = 12.sp)
-//            }
-//            Spacer(modifier = Modifier.weight(1f))
-//            Text(
-//                text = item.amount,
-//                color = if (item.isIncome) Color.Green else Color.Red,
-//                fontWeight = FontWeight.Bold,
-//                fontSize = 20.sp
-//            )
-//        }
-//        Divider() // Loại bỏ padding của Divider
-//    }
-//}
-
 @Composable
 fun HistoryListItem(item: HistoryItem) {
     val iconColor = Color(0xFF1877F2)
@@ -177,7 +120,7 @@ fun HistoryListItem(item: HistoryItem) {
                 fontSize = 23.sp
             )
         }
-        Divider() // Loại bỏ padding của Divider
+        Divider()
     }
 }
 @Preview(showBackground = true)
