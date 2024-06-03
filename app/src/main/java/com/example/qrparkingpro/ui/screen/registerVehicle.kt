@@ -5,16 +5,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,6 +14,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,13 +47,20 @@ fun RegisterVehicleScreen(navController: NavController) {
         imageUri = uri
     }
 
+    // Kiểm tra trạng thái của các trường
+    val isFormValid by remember {
+        derivedStateOf {
+            vehicleNumber.isNotBlank() && imageUri != null
+        }
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(navController = navController, title = "Register Plate")
 
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 "Vehicle category:",
-                style = MaterialTheme.typography.titleMedium.copy(fontSize = 25.sp),
+                style = MaterialTheme.typography.titleMedium.copy(fontSize = 24.sp),
                 modifier = Modifier.padding(top = 24.dp)
             )
             Row(Modifier.padding(vertical = 8.dp)) {
@@ -69,23 +68,23 @@ fun RegisterVehicleScreen(navController: NavController) {
                     selected = vehicleCategory == "Car",
                     onClick = { vehicleCategory = "Car" }
                 )
-                Text("Car", modifier = Modifier.align(Alignment.CenterVertically), fontSize = 24.sp)
+                Text("Car", modifier = Modifier.align(Alignment.CenterVertically), fontSize = 22.sp)
                 Spacer(modifier = Modifier.width(65.dp))
                 androidx.compose.material3.RadioButton(
                     selected = vehicleCategory == "Motorcycle",
                     onClick = { vehicleCategory = "Motorcycle" }
                 )
-                Text("Motorcycle", modifier = Modifier.align(Alignment.CenterVertically), fontSize = 24.sp)
+                Text("Motorcycle", modifier = Modifier.align(Alignment.CenterVertically), fontSize = 22.sp)
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 "Vehicle No*:",
-                style = MaterialTheme.typography.titleMedium.copy(fontSize = 22.sp)
+                style = MaterialTheme.typography.titleMedium.copy(fontSize = 24.sp)
             )
             androidx.compose.material3.OutlinedTextField(
                 value = vehicleNumber,
                 onValueChange = { vehicleNumber = it },
-                label = { Text("Enter your vehicle number", fontSize = 21.sp) },
+                label = { Text("Enter your vehicle number", fontSize = 19.sp, color = Color.Gray) },
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = { /* Handle Done action */ }),
                 modifier = Modifier
@@ -116,7 +115,7 @@ fun RegisterVehicleScreen(navController: NavController) {
                         .border(
                             width = 2.dp,
                             color = GreyLine,
-                            shape = RoundedCornerShape(8.dp)
+                            shape = RoundedCornerShape(14.dp)
                         ),
                     contentAlignment = Alignment.Center
                 ) {
@@ -140,9 +139,14 @@ fun RegisterVehicleScreen(navController: NavController) {
                     }
                 }
             }
-            Spacer(modifier = Modifier.height(25.dp))
+            Spacer(modifier = Modifier.height(38.dp))
             Button(
-                onClick = { /* Handle Register */ },
+                onClick = {
+                    if (isFormValid) {
+                        navController.navigate("home")
+                    }
+                }, // Thêm logic điều hướng về Home
+                enabled = isFormValid, // Nút chỉ kích hoạt khi form hợp lệ
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),

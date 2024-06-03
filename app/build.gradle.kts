@@ -106,4 +106,5 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.6")
     implementation("androidx.navigation:navigation-compose:2.4.0-beta02")
     implementation("org.jetbrains.kotlin:kotlin-parcelize-runtime:1.8.0")
+    implementation ("com.google.code.gson:gson:2.8.6")
 }
