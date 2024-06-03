@@ -65,7 +65,7 @@ fun TransactionInfoCard(transaction: HistoryItem) {
     ) {
         TransactionHeader(transaction, selectedColor)
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(30.dp))
         Column(
             modifier = Modifier
                 .background(Color.White, shape = RoundedCornerShape(12.dp))
@@ -112,11 +112,21 @@ fun TransactionHeader(transaction: HistoryItem, selectedColor: Color) {
                 fontSize = 25.sp
             )
             Spacer(modifier = Modifier.height(4.dp))
+//            Text(
+//                text = transaction.amount,
+//                color = if (transaction.isIncome) Color.Green else Color.Red,
+//                fontWeight = FontWeight.Bold,
+//                fontSize = 29.sp
+//            )
             Text(
                 text = transaction.amount,
-                color = if (transaction.isIncome) Color.Green else Color.Red,
+                color = when {
+                    transaction.amount.startsWith("+") -> Color.Green
+                    transaction.amount.startsWith("-") -> Color.Red
+                    else -> selectedColor
+                },
                 fontWeight = FontWeight.Bold,
-                fontSize = 29.sp
+                fontSize = 27.sp
             )
         }
     }
@@ -125,34 +135,59 @@ fun TransactionHeader(transaction: HistoryItem, selectedColor: Color) {
 @Composable
 fun TransactionDescription(transaction: HistoryItem) {
     val selectedColor = Color(0xFF1877F2)
-    Text(
-        text = "Description",
-        fontWeight = FontWeight.Bold,
-        fontSize = 28.sp,
-        modifier = Modifier.padding(10.dp)
-    )
-    Spacer(modifier = Modifier.height(0.dp))
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White, shape = RoundedCornerShape(12.dp)),
-        horizontalAlignment = Alignment.Start
-    ) {
-        Spacer(modifier = Modifier.height(20.dp))
+    if (transaction.description == "Pay parking fee") {
+        Text(
+            text = "Description",
+            fontWeight = FontWeight.Bold,
+            fontSize = 28.sp,
+            modifier = Modifier.padding(10.dp)
+        )
+        Spacer(modifier = Modifier.height(0.dp))
         Column(
             modifier = Modifier
-                .background(Color.White, shape = RoundedCornerShape(12.dp))
-                .border(width = 0.1.dp, color = Color.Gray, shape = RoundedCornerShape(12.dp))
-                .padding(9.dp)
-            ,
+                .fillMaxWidth()
+                .background(Color.White, shape = RoundedCornerShape(12.dp)),
             horizontalAlignment = Alignment.Start
-        ){
-            TransactionDetailItem(label = "License plate", value = "51A1 99999", valueColor = selectedColor)
-        TransactionDetailItem(label = "Date", value = "21/3/2024", valueColor = selectedColor)
-        TransactionDetailItem(label = "Parked at", value = "A1 parking lot", valueColor = selectedColor)
-        TransactionDetailItem(label = "Parked from", value = "8:00 a.m", valueColor = selectedColor)
-        TransactionDetailItem(label = "Parked to", value = "10:00 a.m", valueColor = selectedColor)
-        TransactionDetailItem(label = "Parking fee due", value = "1$", valueColor = selectedColor)
+        ) {
+            Spacer(modifier = Modifier.height(20.dp))
+            Column(
+                modifier = Modifier
+                    .background(Color.White, shape = RoundedCornerShape(12.dp))
+                    .border(width = 0.1.dp, color = Color.Gray, shape = RoundedCornerShape(12.dp))
+                    .padding(9.dp),
+                horizontalAlignment = Alignment.Start
+            ) {
+                TransactionDetailItem(
+                    label = "License plate",
+                    value = "51A1 99999",
+                    valueColor = selectedColor
+                )
+                TransactionDetailItem(
+                    label = "Date",
+                    value = "21/3/2024",
+                    valueColor = selectedColor
+                )
+                TransactionDetailItem(
+                    label = "Parked at",
+                    value = "A1 parking lot",
+                    valueColor = selectedColor
+                )
+                TransactionDetailItem(
+                    label = "Parked from",
+                    value = "8:00 a.m",
+                    valueColor = selectedColor
+                )
+                TransactionDetailItem(
+                    label = "Parked to",
+                    value = "10:00 a.m",
+                    valueColor = selectedColor
+                )
+                TransactionDetailItem(
+                    label = "Parking fee due",
+                    value = "1$",
+                    valueColor = selectedColor
+                )
+            }
         }
     }
 }
@@ -186,8 +221,10 @@ fun PreviewTransactionDetailScreen() {
     val navController = rememberNavController()
     val sampleTransaction = HistoryItem(
         description = "Pay parking fee",
+//         description = "Add funds to the app",
         date = "10:00 a.m - 20/3/2024",
         amount = "-1$",
+//         amount = "+20$",
         balance = "80$",
         isIncome = false
     )

@@ -120,7 +120,7 @@ fun HistoryListItem(item: HistoryItem) {
                 fontSize = 23.sp
             )
         }
-        Divider() // Loại bỏ padding của Divider
+        Divider()
     }
 }
 @Preview(showBackground = true)
