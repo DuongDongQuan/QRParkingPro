@@ -143,9 +143,14 @@ fun RegisterVehicleScreen(navController: NavController) {
             Button(
                 onClick = {
                     if (isFormValid) {
+//                        navController.navigate("home")
+                        navController.previousBackStackEntry?.savedStateHandle?.set(
+                            "registeredVehicle",
+                            "$vehicleCategory to $vehicleNumber"
+                        )
                         navController.navigate("home")
                     }
-                }, // Thêm logic điều hướng về Home
+                },
                 enabled = isFormValid, // Nút chỉ kích hoạt khi form hợp lệ
                 modifier = Modifier
                     .fillMaxWidth()
