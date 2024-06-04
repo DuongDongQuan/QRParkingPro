@@ -90,7 +90,7 @@ fun HistoryScreen(navController: NavController) {
                 else -> historyListVM?.historyItems
             }
             items(items!!) { item ->
-                HistoryListItem(item)
+                HistoryListItem(item, navController)
             }
         }
         HomeBottomBar(navController = navController)
@@ -98,7 +98,7 @@ fun HistoryScreen(navController: NavController) {
 }
 
 @Composable
-fun HistoryListItem(item: HistoryItem, navController: NavController = rememberNavController()) {
+fun HistoryListItem(item: HistoryItem, navController: NavController) {
     val iconColor = Color(0xFF1877F2)
     Column(modifier = Modifier
         .fillMaxWidth()
