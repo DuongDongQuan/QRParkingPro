@@ -38,11 +38,12 @@ import androidx.navigation.compose.rememberNavController
 import com.example.qrparkingpro.R
 import com.example.qrparkingpro.ui.components.HomeBottomBar
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
+import com.example.qrparkingpro.vehicleListVM
 import com.example.qrparkingpro.viewmodel.VehicleListVM
 import com.example.vehicleplate.ui.theme.GreyLine
 
 @Composable
-fun HomeScreen(navController: NavController, vehicleListVM: VehicleListVM) {
+fun HomeScreen(navController: NavController) {
     val GreenText = Color(0xFF60D936)
 
     Scaffold(
@@ -193,7 +194,9 @@ fun HomeScreen(navController: NavController, vehicleListVM: VehicleListVM) {
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         IconButton(
-                            onClick = { navController.navigate("register_vehicle") }, // Điều hướng tới màn hình Register Vehicle
+                            onClick = { navController.navigate("topup_withdraw") },
+                            //
+                            // Điều hướng tới màn hình Register Vehicle
                             modifier = Modifier
                                 .size(64.dp)
                                 .background(
@@ -274,7 +277,7 @@ fun HomeScreen(navController: NavController, vehicleListVM: VehicleListVM) {
                     }
                     Divider(color = GreyLine, thickness = 1.dp)
                     Spacer(modifier = Modifier.height(6.dp))
-                    vehicleListVM.vehicles.forEach {
+                    vehicleListVM?.vehicles?.forEach {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
@@ -294,9 +297,6 @@ fun HomeScreen(navController: NavController, vehicleListVM: VehicleListVM) {
 @Composable
 fun HomeScreenPreview() {
     QRParkingProTheme {
-        HomeScreen(
-            navController = rememberNavController(),
-            vehicleListVM = VehicleListVM()
-        )
+        HomeScreen(navController = rememberNavController())
     }
 }

@@ -37,7 +37,7 @@
 //import androidx.navigation.compose.NavHost
 //import androidx.navigation.compose.composable
 //import androidx.navigation.compose.rememberNavController
-//import com.example.qrparkingpro.ui.screens.HistoryScreen
+//import com.example.qrparkingpro.ui.screen.HistoryScreen
 //import com.example.qrparkingpro.ui.theme.QRParkingProTheme
 //
 //class MainActivity : ComponentActivity() {
@@ -80,18 +80,22 @@ import androidx.activity.viewModels
 import androidx.navigation.compose.rememberNavController
 import com.example.qrparkingpro.navigation.NavGraph
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
+import com.example.qrparkingpro.viewmodel.HistoryListVM
 import com.example.qrparkingpro.viewmodel.VehicleListVM
 
+var vehicleListVM: VehicleListVM? = null
+var historyListVM: HistoryListVM? = null
+
 class MainActivity : ComponentActivity() {
-    private val vehicleListVM by viewModels<VehicleListVM>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        vehicleListVM = VehicleListVM()
+        historyListVM = HistoryListVM()
         setContent {
             QRParkingProTheme {
                 val navController = rememberNavController()
                 NavGraph(
                     navController = navController,
-                    vehicleListVM = vehicleListVM
                 )
             }
         }

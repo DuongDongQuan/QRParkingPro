@@ -35,6 +35,7 @@ import com.example.qrparkingpro.model.Vehicle
 import com.example.qrparkingpro.model.VehicleType
 import com.example.qrparkingpro.ui.components.TopBar
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
+import com.example.qrparkingpro.vehicleListVM
 import com.example.qrparkingpro.viewmodel.VehicleListVM
 import com.example.vehicleplate.ui.theme.GreyLine
 import com.example.vehicleplate.ui.theme.GreyText
@@ -42,7 +43,6 @@ import com.example.vehicleplate.ui.theme.GreyText
 @Composable
 fun RegisterVehicleScreen(
     navController: NavController,
-    vehicleListVM: VehicleListVM
 ) {
     var vehicleCategory by remember { mutableStateOf("Car") }
     var vehicleNumber by remember { mutableStateOf("") }
@@ -174,7 +174,7 @@ fun RegisterVehicleScreen(
                                 VehicleType.CAR else
                                 VehicleType.MOTORCYCLE,
                         )
-                        vehicleListVM.addVehicle(newVehicle)
+                        vehicleListVM?.addVehicle(newVehicle)
                         navController.navigate("home")
                     }
                 },
@@ -201,7 +201,6 @@ fun RegisterVehicleScreenPreview() {
     QRParkingProTheme {
         RegisterVehicleScreen(
             navController = rememberNavController(),
-            vehicleListVM = VehicleListVM()
         )
     }
 }

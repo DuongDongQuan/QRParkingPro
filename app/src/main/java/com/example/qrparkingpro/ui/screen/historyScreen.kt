@@ -1,4 +1,4 @@
-package com.example.qrparkingpro.ui.screens
+package com.example.qrparkingpro.ui.screen
 
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -38,25 +38,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.qrparkingpro.R
+import com.example.qrparkingpro.historyListVM
+import com.example.qrparkingpro.model.HistoryItem
 import com.example.qrparkingpro.ui.components.HomeBottomBar
 import com.example.qrparkingpro.ui.components.TopBar
 import com.google.gson.Gson
-
-
-data class HistoryItem(val description: String, val date: String, val amount: String, val balance: String, val isIncome: Boolean)
 
 @Composable
 fun HistoryScreen(navController: NavController) {
     var selectedTab by remember { mutableStateOf("All") }
 
-    val allItems = listOf(
-        HistoryItem("Add funds to the app", "8:00 a.m - 21/3/2024", "+20$", "Account balance: 100$", true),
-        HistoryItem("Pay parking fee", "10:00 a.m - 20/3/2024", "-1$", "Account balance: 80$", false),
-        HistoryItem("Withdraw to paypal", "11:00 p.m - 19/3/2024", "-8$", "Account balance: 81$", false)
-    )
-
-    val topUpItems = allItems.filter { it.isIncome }
-    val paymentItems = allItems.filter { !it.isIncome }
     val selectedColor = Color(0xFF1877F2)
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(navController = navController, title = "History")
@@ -93,12 +84,12 @@ fun HistoryScreen(navController: NavController) {
         }
         LazyColumn(modifier = Modifier.fillMaxSize().background(Color.White)) {
             val items = when (selectedTab) {
-                "All" -> allItems
-                "Top up" -> topUpItems
-                "Payment" -> paymentItems
-                else -> allItems
+                "All" -> historyListVM?.historyItems
+                "Top up" -> historyListVM?.historyItems?.filter { it.isIncome }
+                "Payment" -> historyListVM?.historyItems?.filter { !it.isIncome }
+                else -> historyListVM?.historyItems
             }
-            items(items) { item ->
+            items(items!!) { item ->
                 HistoryListItem(item)
             }
         }

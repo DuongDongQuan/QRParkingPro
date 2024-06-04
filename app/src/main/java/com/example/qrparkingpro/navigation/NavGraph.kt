@@ -8,24 +8,25 @@ import androidx.navigation.navArgument
 import com.example.qrparkingpro.ui.screen.HomeScreen
 import com.example.qrparkingpro.ui.screen.RegisterVehicleScreen
 import com.example.qrparkingpro.ui.screens.TransactionDetailScreen
-import com.example.qrparkingpro.ui.screens.HistoryScreen
+import com.example.qrparkingpro.ui.screen.HistoryScreen
 import com.example.qrparkingpro.model.HistoryItem
-import com.example.qrparkingpro.viewmodel.VehicleListVM
+import com.example.qrparkingpro.ui.screen.TopUpWithdrawPage
 import com.google.gson.Gson
 
 @Composable
-fun NavGraph(navController: NavHostController, vehicleListVM: VehicleListVM) {
+fun NavGraph(navController: NavHostController) {
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
             HomeScreen(
                 navController = navController,
-                vehicleListVM = vehicleListVM
             )
+        }
+        composable("topup_withdraw") {
+            TopUpWithdrawPage(option = false)
         }
         composable("register_vehicle") {
             RegisterVehicleScreen(
                 navController = navController,
-                vehicleListVM = vehicleListVM
             )
         }
         composable("history") { HistoryScreen(navController = navController) }
