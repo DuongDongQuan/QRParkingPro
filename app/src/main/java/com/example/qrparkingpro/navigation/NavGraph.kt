@@ -10,21 +10,37 @@ import com.example.qrparkingpro.ui.screen.RegisterVehicleScreen
 import com.example.qrparkingpro.ui.screens.TransactionDetailScreen
 import com.example.qrparkingpro.ui.screens.HistoryScreen
 import com.example.qrparkingpro.model.HistoryItem
+import com.example.qrparkingpro.viewmodel.VehicleListVM
 import com.google.gson.Gson
 
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController, vehicleListVM: VehicleListVM) {
     NavHost(navController = navController, startDestination = "home") {
-        composable("home") { HomeScreen(navController = navController) }
-        composable("register_vehicle") { RegisterVehicleScreen(navController = navController) }
+        composable("home") {
+            HomeScreen(
+                navController = navController,
+                vehicleListVM = vehicleListVM
+            )
+        }
+        composable("register_vehicle") {
+            RegisterVehicleScreen(
+                navController = navController,
+                vehicleListVM = vehicleListVM
+            )
+        }
         composable("history") { HistoryScreen(navController = navController) }
         composable(
             "transactionDetail/{transaction}",
-            arguments = listOf(navArgument("transaction") { type = androidx.navigation.NavType.StringType })
+            arguments = listOf(navArgument("transaction") {
+                type = androidx.navigation.NavType.StringType
+            })
         ) { backStackEntry ->
             val json = backStackEntry.arguments?.getString("transaction")
             val transaction = Gson().fromJson(json, HistoryItem::class.java)
-            TransactionDetailScreen(navController = navController, transaction = transaction)
+            TransactionDetailScreen(
+                navController = navController,
+                transaction = transaction
+            )
         }
     }
 }

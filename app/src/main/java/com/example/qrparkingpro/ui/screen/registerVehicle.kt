@@ -12,7 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -31,13 +31,19 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.qrparkingpro.R
+import com.example.qrparkingpro.model.Vehicle
+import com.example.qrparkingpro.model.VehicleType
 import com.example.qrparkingpro.ui.components.TopBar
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
+import com.example.qrparkingpro.viewmodel.VehicleListVM
 import com.example.vehicleplate.ui.theme.GreyLine
 import com.example.vehicleplate.ui.theme.GreyText
 
 @Composable
-fun RegisterVehicleScreen(navController: NavController) {
+fun RegisterVehicleScreen(
+    navController: NavController,
+    vehicleListVM: VehicleListVM
+) {
     var vehicleCategory by remember { mutableStateOf("Car") }
     var vehicleNumber by remember { mutableStateOf("") }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
@@ -64,27 +70,41 @@ fun RegisterVehicleScreen(navController: NavController) {
                 modifier = Modifier.padding(top = 24.dp)
             )
             Row(Modifier.padding(vertical = 8.dp)) {
-                androidx.compose.material3.RadioButton(
+                RadioButton(
                     selected = vehicleCategory == "Car",
                     onClick = { vehicleCategory = "Car" }
                 )
-                Text("Car", modifier = Modifier.align(Alignment.CenterVertically), fontSize = 22.sp)
+                Text(
+                    "Car",
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    fontSize = 22.sp
+                )
                 Spacer(modifier = Modifier.width(65.dp))
-                androidx.compose.material3.RadioButton(
+                RadioButton(
                     selected = vehicleCategory == "Motorcycle",
                     onClick = { vehicleCategory = "Motorcycle" }
                 )
-                Text("Motorcycle", modifier = Modifier.align(Alignment.CenterVertically), fontSize = 22.sp)
+                Text(
+                    "Motorcycle",
+                    modifier = Modifier.align(Alignment.CenterVertically),
+                    fontSize = 22.sp
+                )
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 "Vehicle No*:",
                 style = MaterialTheme.typography.titleMedium.copy(fontSize = 24.sp)
             )
-            androidx.compose.material3.OutlinedTextField(
+            OutlinedTextField(
                 value = vehicleNumber,
                 onValueChange = { vehicleNumber = it },
-                label = { Text("Enter your vehicle number", fontSize = 19.sp, color = Color.Gray) },
+                label = {
+                    Text(
+                        "Enter your vehicle number",
+                        fontSize = 19.sp,
+                        color = Color.Gray
+                    )
+                },
                 keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
                 keyboardActions = KeyboardActions(onDone = { /* Handle Done action */ }),
                 modifier = Modifier
@@ -119,7 +139,7 @@ fun RegisterVehicleScreen(navController: NavController) {
                         ),
                     contentAlignment = Alignment.Center
                 ) {
-                    androidx.compose.material3.IconButton(
+                    IconButton(
                         onClick = { imagePickerLauncher.launch("image/*") },
                         modifier = Modifier.size(190.dp)
                     ) {
@@ -130,7 +150,7 @@ fun RegisterVehicleScreen(navController: NavController) {
                                 modifier = Modifier.fillMaxSize()
                             )
                         } ?: run {
-                            androidx.compose.material3.Icon(
+                            Icon(
                                 painter = painterResource(id = R.drawable.img),
                                 contentDescription = "Upload Image",
                                 modifier = Modifier.size(190.dp)
@@ -148,6 +168,13 @@ fun RegisterVehicleScreen(navController: NavController) {
                             "registeredVehicle",
                             "$vehicleCategory to $vehicleNumber"
                         )
+                        val newVehicle = Vehicle(
+                            plateNumber = vehicleNumber,
+                            type = if (vehicleCategory == "Car")
+                                VehicleType.CAR else
+                                VehicleType.MOTORCYCLE,
+                        )
+                        vehicleListVM.addVehicle(newVehicle)
                         navController.navigate("home")
                     }
                 },
@@ -155,7 +182,11 @@ fun RegisterVehicleScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF1877F2)),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color(
+                        0xFF1877F2
+                    )
+                ),
                 shape = RoundedCornerShape(12.dp)
             ) {
                 Text("REGISTER", color = Color.White, fontSize = 18.sp)
@@ -168,6 +199,9 @@ fun RegisterVehicleScreen(navController: NavController) {
 @Composable
 fun RegisterVehicleScreenPreview() {
     QRParkingProTheme {
-        RegisterVehicleScreen(navController = rememberNavController())
+        RegisterVehicleScreen(
+            navController = rememberNavController(),
+            vehicleListVM = VehicleListVM()
+        )
     }
 }

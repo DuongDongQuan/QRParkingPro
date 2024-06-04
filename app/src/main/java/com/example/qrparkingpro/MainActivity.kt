@@ -76,17 +76,23 @@ package com.example.qrparkingpro
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.navigation.compose.rememberNavController
 import com.example.qrparkingpro.navigation.NavGraph
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
+import com.example.qrparkingpro.viewmodel.VehicleListVM
 
 class MainActivity : ComponentActivity() {
+    private val vehicleListVM by viewModels<VehicleListVM>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             QRParkingProTheme {
                 val navController = rememberNavController()
-                NavGraph(navController = navController)
+                NavGraph(
+                    navController = navController,
+                    vehicleListVM = vehicleListVM
+                )
             }
         }
     }
