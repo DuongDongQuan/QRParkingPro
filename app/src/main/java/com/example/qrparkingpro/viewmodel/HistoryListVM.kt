@@ -9,9 +9,9 @@ import com.example.qrparkingpro.model.HistoryItem
 class HistoryListVM: ViewModel() {
     var historyItems by mutableStateOf(
         listOf(
-            HistoryItem("1", "2021-09-01", "100", "100", true),
-            HistoryItem("2", "2021-09-02", "200", "300", false),
-            HistoryItem("3", "2021-09-03", "300", "600", true),
+            HistoryItem("Add funds to the app", "2024-06-05", "+100$", "100$", true),
+            HistoryItem("Pay parking fee", "2024-06-06", "-2$", "2$", false),
+            HistoryItem("Withdraw to paypal", "2024-06-07", "-50$", "50$", false),
         )
     )
 

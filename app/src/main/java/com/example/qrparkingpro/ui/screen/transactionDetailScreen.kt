@@ -33,6 +33,9 @@ import com.example.qrparkingpro.R
 import com.example.qrparkingpro.model.HistoryItem
 import com.example.qrparkingpro.ui.components.TopBar
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
+import com.example.qrparkingpro.vehicleListVM
+import com.example.qrparkingpro.viewmodel.VehicleListVM
+import com.google.type.Date
 
 @Composable
 fun TransactionDetailScreen(navController: NavController, transaction: HistoryItem) {
@@ -77,7 +80,7 @@ fun TransactionInfoCard(transaction: HistoryItem) {
         TransactionDetailItem(label = "Status", value = "successful", valueColor = GreenText)
         TransactionDetailItem(label = "Created time", value = transaction.date, valueColor = selectedColor)
         TransactionDetailItem(label = "Account/Card", value = "Paypal", valueColor = selectedColor)
-        TransactionDetailItem(label = "Total fee", value = if (transaction.isIncome) "Free of charge" else "1$", valueColor = selectedColor)
+        TransactionDetailItem(label = "Total fee", value = "Free of charge", valueColor = selectedColor)
         }
     }
 }
@@ -140,7 +143,9 @@ fun TransactionDescription(transaction: HistoryItem) {
             text = "Description",
             fontWeight = FontWeight.Bold,
             fontSize = 28.sp,
+            color = selectedColor,
             modifier = Modifier.padding(10.dp)
+
         )
         Spacer(modifier = Modifier.height(0.dp))
         Column(
@@ -159,12 +164,12 @@ fun TransactionDescription(transaction: HistoryItem) {
             ) {
                 TransactionDetailItem(
                     label = "License plate",
-                    value = "51A1 99999",
+                    value = vehicleListVM?.vehicles?.firstOrNull()?.plateNumber?.take(8) ?: "",
                     valueColor = selectedColor
                 )
                 TransactionDetailItem(
                     label = "Date",
-                    value = "21/3/2024",
+                    value = transaction.date,
                     valueColor = selectedColor
                 )
                 TransactionDetailItem(
@@ -184,7 +189,7 @@ fun TransactionDescription(transaction: HistoryItem) {
                 )
                 TransactionDetailItem(
                     label = "Parking fee due",
-                    value = "1$",
+                    value = transaction.date,
                     valueColor = selectedColor
                 )
             }
@@ -192,9 +197,20 @@ fun TransactionDescription(transaction: HistoryItem) {
     }
 }
 
+
 @Composable
 fun TransactionDetailItem(label: String, value: String, valueColor: Color = Color.Black) {
     val GreyText = Color(0xFF6C757D)
+//    vehicleListVM?.vehicles?.forEach {
+//        Row(
+//            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.SpaceBetween
+//        ) {
+//            Text(it.type.name, fontSize = 18.sp)
+//            Text(it.plateNumber, fontSize = 18.sp)
+//        }
+//        Spacer(modifier = Modifier.height(8.dp))
+//    }
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween

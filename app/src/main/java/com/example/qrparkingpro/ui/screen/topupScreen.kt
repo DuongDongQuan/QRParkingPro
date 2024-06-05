@@ -350,7 +350,7 @@ fun SubmitAction(option: Boolean) {
     Button(
         onClick = {
             val newHistoryItem = HistoryItem(
-                "1", "2021-09-01", "100",
+                "1", "2024-06-06", "100",
                 "100", true
             )
             historyListVM?.addHistoryItem(newHistoryItem)

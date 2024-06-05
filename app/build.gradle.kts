@@ -90,6 +90,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.protolite.well.known.types)
     // implementation(libs.compose.preview.renderer) // Loại bỏ thư viện này nếu không cần thiết
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

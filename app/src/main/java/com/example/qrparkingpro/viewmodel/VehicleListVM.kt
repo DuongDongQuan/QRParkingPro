@@ -10,8 +10,8 @@ import com.example.qrparkingpro.model.VehicleType
 class VehicleListVM : ViewModel() {
     var vehicles by mutableStateOf(
         listOf(
-            Vehicle("1", VehicleType.CAR),
-            Vehicle("2", VehicleType.MOTORCYCLE),
+            Vehicle("35H12345", VehicleType.CAR),
+            Vehicle("23A19192", VehicleType.MOTORCYCLE),
         )
     )
 

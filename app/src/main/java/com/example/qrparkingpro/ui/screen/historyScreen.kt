@@ -124,7 +124,7 @@ fun HistoryListItem(item: HistoryItem, navController: NavController) {
             }
             Spacer(modifier = Modifier.width(16.dp))
             Column {
-                Text(text = item.description, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(text = item.description, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = iconColor)
                 Text(text = item.date, color = Color.Gray, fontSize = 15.sp)
                 Text(text = item.balance, color = Color.Gray, fontSize = 15.sp)
             }
