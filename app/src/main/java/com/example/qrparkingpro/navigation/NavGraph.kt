@@ -34,6 +34,7 @@ fun NavGraph(navController: NavHostController) {
                 navController = navController,
             )
         }
+        composable("qrcode") { QRScreen(navController = navController, userId = "3003") }
         composable("history") { HistoryScreen(navController = navController) }
         composable(
             "transactionDetail/{transaction}",

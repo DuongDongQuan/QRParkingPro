@@ -25,6 +25,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.qrparkingpro.R
+import androidx.compose.foundation.layout.height
+
 
 @Composable
 fun HomeBottomBar(navController: NavController) {
@@ -33,12 +35,13 @@ fun HomeBottomBar(navController: NavController) {
 
     BottomAppBar(
         backgroundColor = Color(0xFFF1F1F1),
-        elevation = 20.dp
+        elevation = 20.dp,
+        modifier = Modifier.height(75.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 4.dp),
+                .padding(vertical = 0.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -51,8 +54,8 @@ fun HomeBottomBar(navController: NavController) {
             BottomNavigationItem(
                 icon = R.drawable.qrcode,
                 label = "QR code",
-                isSelected = currentDestination == "qr_code",
-                onClick = { navController.navigate("qr_code") }
+                isSelected = currentDestination == "qrcode",
+                onClick = { navController.navigate("qrcode") }
             )
             BottomNavigationItem(
                 icon = R.drawable.history,
@@ -80,25 +83,47 @@ fun BottomNavigationItem(
             .padding(10.dp)
             .clickable(onClick = onClick)
     ) {
+//        IconButton(
+//            onClick = onClick,
+//            modifier = Modifier
+//                .size(80.dp)
+//
+//        ) {
+//            Icon(
+//                painter = painterResource(id = icon),
+//                contentDescription = label,
+//                tint = if (isSelected) seclectedColor else Color.Gray,
+//                modifier = Modifier.size(if (isSelected) 130.dp else 130.dp)
+//            )
+//
+//        }
+//        Text(
+//            text = label,
+//            color = if (isSelected) Color(0xFF1877F2) else Color.Gray,
+//            fontSize = if (isSelected) 14.sp else 12.sp,
+//            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal)
+
         IconButton(
             onClick = onClick,
             modifier = Modifier
-                .size(80.dp)
+                .size(30.dp)
 
         ) {
             Icon(
                 painter = painterResource(id = icon),
                 contentDescription = label,
                 tint = if (isSelected) seclectedColor else Color.Gray,
-                modifier = Modifier.size(if (isSelected) 130.dp else 130.dp)
+                modifier = Modifier.size(if (isSelected) 80.dp else 70.dp)
             )
+
         }
         Text(
             text = label,
             color = if (isSelected) Color(0xFF1877F2) else Color.Gray,
-            fontSize = if (isSelected) 14.sp else 12.sp,
-            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
-        )
+            fontSize =  17.sp,
+            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal)
+
+
     }
 }
 @Preview(showBackground = true)

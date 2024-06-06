@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -50,7 +51,7 @@ fun QRScreen(navController: NavController, userId: String) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(vertical = 0.dp, horizontal = 2.dp)
                 .background(androidx.compose.ui.graphics.Color.White, shape = RoundedCornerShape(10.dp))
                 .align(Alignment.CenterHorizontally),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -59,28 +60,28 @@ fun QRScreen(navController: NavController, userId: String) {
             Text(
                 text = "Please display the QR code for scanning",
                 color = androidx.compose.ui.graphics.Color.Gray,
-                fontSize = 18.sp,
-                modifier = Modifier.padding(bottom = 10.dp)
+                fontSize = 19.sp,
+                modifier = Modifier.padding(top = 30.dp)
             )
-            // display barcode
-            barcodeBitmap?.let {
-                Image(
-                    bitmap = it.asImageBitmap(),
-                    contentDescription = "bar code",
-                    modifier = Modifier
-                        .height(40.dp)
-                        .fillMaxWidth()
-                )
-            }
+//            // display barcode
+//            barcodeBitmap?.let {
+//                Image(
+//                    bitmap = it.asImageBitmap(),
+//                    contentDescription = "bar code",
+//                    modifier = Modifier
+//                        .width(320.dp)
+//                        .height(90.dp)
+//                        .padding(vertical = 0.dp)
+//                )
+//            }
             // display qr code
             qrBitmap?.let {
                 Image(
                     bitmap = it.asImageBitmap(),
                     contentDescription = "QR code",
-                    modifier = Modifier.size(200.dp)
+                    modifier = Modifier.size(450.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(10.dp))
 
 
         }

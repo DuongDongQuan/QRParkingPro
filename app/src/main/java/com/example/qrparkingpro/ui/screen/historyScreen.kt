@@ -43,6 +43,7 @@ import com.example.qrparkingpro.model.HistoryItem
 import com.example.qrparkingpro.ui.components.HomeBottomBar
 import com.example.qrparkingpro.ui.components.TopBar
 import com.google.gson.Gson
+import com.example.qrparkingpro.ui.components.HomeBottomBar
 
 @Composable
 fun HistoryScreen(navController: NavController) {
@@ -51,6 +52,7 @@ fun HistoryScreen(navController: NavController) {
     val selectedColor = Color(0xFF1877F2)
     Column(modifier = Modifier.fillMaxSize()) {
         TopBar(navController = navController, title = "History")
+
         TabRow(
             selectedTabIndex = when(selectedTab) {
                 "All" -> 0
@@ -82,7 +84,7 @@ fun HistoryScreen(navController: NavController) {
                 Text("Payment", modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = if (selectedTab == "Payment") selectedColor else Color.Gray)
             }
         }
-        LazyColumn(modifier = Modifier.fillMaxSize().background(Color.White)) {
+        LazyColumn(modifier = Modifier.fillMaxSize().background(Color.White).weight(1f)) {
             val items = when (selectedTab) {
                 "All" -> historyListVM?.historyItems
                 "Top up" -> historyListVM?.historyItems?.filter { it.isIncome }
@@ -95,6 +97,9 @@ fun HistoryScreen(navController: NavController) {
         }
         HomeBottomBar(navController = navController)
     }
+
+
+
 }
 
 @Composable
