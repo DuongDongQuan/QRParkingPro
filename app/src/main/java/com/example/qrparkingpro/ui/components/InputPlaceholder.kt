@@ -23,21 +23,13 @@ import androidx.compose.ui.unit.dp
 import com.example.qrparkingpro.R
 
 @Composable
-fun InputEmail(){
-    Row(verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center) {
-        TextField(value = "",
-
-            modifier = Modifier
-                .fillMaxWidth(),
-            leadingIcon = { Icon(Icons.Rounded.Email, contentDescription = "Email Icon") },
-            onValueChange = { },
-            placeholder = {
-                InputPlaceholder("Email")
-            }
-        )
-    }
+fun InputEmail(email: String, onEmailChange: (String) -> Unit) {
+    TextField(
+        value = email,
+        onValueChange = onEmailChange,
+        label = { Text("Email") },
+        modifier = Modifier.fillMaxWidth()
+    )
 }
 
 @Composable
@@ -63,27 +55,15 @@ fun InputPassword(){
 }
 
 @Composable
-fun InputPasswordConfirm(){
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        TextField(
-            value = "",
-            modifier = Modifier
-                .fillMaxWidth(),
-            leadingIcon = { Icon(Icons.Rounded.Lock, contentDescription = "Email Icon") },
-            trailingIcon = {
-                Icon(painter = painterResource(R.drawable.blind_eye),
-                    contentDescription = "Blind Icon", modifier = Modifier.size(25.dp))
-            },
-            onValueChange = { },
-            visualTransformation = PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            placeholder = {
-                InputPlaceholder("Confirm Password:")
-            }
-        )
-    }
+fun InputPassword(password: String, onPasswordChange: (String) -> Unit) {
+    TextField(
+        value = password,
+        onValueChange = onPasswordChange,
+        label = { Text("Password") },
+        visualTransformation = PasswordVisualTransformation(),
+        modifier = Modifier.fillMaxWidth()
+    )
 }
-
 @Composable
 fun InputPlaceholder(message: String){
     Text(

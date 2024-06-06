@@ -10,12 +10,16 @@ import com.example.qrparkingpro.ui.screen.RegisterVehicleScreen
 import com.example.qrparkingpro.ui.screens.TransactionDetailScreen
 import com.example.qrparkingpro.ui.screen.HistoryScreen
 import com.example.qrparkingpro.model.HistoryItem
+import com.example.qrparkingpro.ui.screen.LoginPage
+import com.example.qrparkingpro.ui.screen.SignupPage
 import com.example.qrparkingpro.ui.screen.TopUpWithdrawPage
 import com.google.gson.Gson
 
 @Composable
 fun NavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "home") {
+    NavHost(navController = navController, startDestination = "login") {
+        composable("login") { LoginPage(navController = navController) }
+        composable("signup") { SignupPage(navController = navController) }
         composable("home") {
             HomeScreen(
                 navController = navController,
