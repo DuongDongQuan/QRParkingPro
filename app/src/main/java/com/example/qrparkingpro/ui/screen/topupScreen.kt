@@ -49,6 +49,7 @@ import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
+import androidx.navigation.NavController
 
 @Composable
 fun TopUpWithdrawPage(option: Boolean) {
@@ -111,7 +112,8 @@ fun ContentBody(innerPadding: PaddingValues, option: Boolean) {
     ) {
         MoneyDisplay(option)
         FundSource()
-        SubmitAction(option)
+//        SubmitAction(option)
+        SubmitAction(option, navController = rememberNavController())
     }
 }
 
@@ -313,7 +315,7 @@ fun CheckButton(isSelected: Boolean = false) {
 }
 
 @Composable
-fun SubmitAction(option: Boolean) {
+fun SubmitAction(option: Boolean, navController: NavController) {
     val text: String
     if (option) {
         text = "WITHDRAW"
@@ -323,11 +325,12 @@ fun SubmitAction(option: Boolean) {
     Button(
         onClick = {
             val newHistoryItem = HistoryItem(
-                "1", "2024-06-06", "100",
-                "100", true
+                "Add funds to the app", "2024-07-06", "+300$",
+                "300$", true
             )
             historyListVM?.addHistoryItem(newHistoryItem)
             Log.d("History List", historyListVM?.historyItems.toString())
+            navController.navigate("home")
         },
         modifier = Modifier
             .padding(40.dp)
