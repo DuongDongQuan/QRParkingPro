@@ -206,26 +206,20 @@
 //
 package com.example.qrparkingpro.ui.screen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -233,7 +227,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -248,12 +241,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.qrparkingpro.R
 import com.example.qrparkingpro.ui.components.InputEmail
 import com.example.qrparkingpro.ui.components.InputPassword
-import com.example.qrparkingpro.ui.components.InputPasswordConfirm
 import com.example.qrparkingpro.viewmodel.LoginViewModel
 import com.example.vehicleplate.ui.theme.LightGray40
 import com.example.vehicleplate.ui.theme.SkyBlue40
-import com.example.vehicleplate.ui.theme.SkyBlue60
-import com.example.vehicleplate.ui.theme.SkyBlue80
 
 @Composable
 fun LoginPage(navController: NavController, loginViewModel: LoginViewModel = viewModel()) {
@@ -261,6 +251,7 @@ fun LoginPage(navController: NavController, loginViewModel: LoginViewModel = vie
     val password by loginViewModel.password.collectAsState()
     val passwordConfirm by loginViewModel.passwordConfirm.collectAsState()
     val isFormValid by loginViewModel.isFormValid.collectAsState()
+    val isFormValidLogin by loginViewModel.isFormValidLogin.collectAsState()
 
     Card(modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)) {
@@ -284,9 +275,10 @@ fun LoginPage(navController: NavController, loginViewModel: LoginViewModel = vie
             Spacer(modifier = Modifier.height(32.dp))
 
             InputEmail(email = email, onEmailChange = loginViewModel::onEmailChange)
-            InputPasswordConfirm(password = password, passwordConfirm = passwordConfirm,
-                onPasswordChange = loginViewModel::onPasswordChange, onPasswordConfirmChange = loginViewModel::onPasswordConfirmChange)
-
+            InputPassword(password = password, onPasswordChange = loginViewModel::onPasswordChange)
+//            InputPasswordConfirm(password = password, passwordConfirm = passwordConfirm,
+//                onPasswordChange = loginViewModel::onPasswordChange, onPasswordConfirmChange = loginViewModel::onPasswordConfirmChange)
+            val buttonColor = Color(0xFF1877F2)
             Button(
                 onClick = { loginViewModel.onLogin(navController) },
                 enabled = isFormValid,
@@ -294,7 +286,8 @@ fun LoginPage(navController: NavController, loginViewModel: LoginViewModel = vie
                     .padding(top = 40.dp, bottom = 20.dp)
                     .fillMaxWidth()
                     .height(48.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = SkyBlue60)
+                colors = ButtonDefaults.buttonColors(containerColor = buttonColor),
+                shape = RoundedCornerShape(12.dp)
             ) {
                 Text(text = "Login", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
             }

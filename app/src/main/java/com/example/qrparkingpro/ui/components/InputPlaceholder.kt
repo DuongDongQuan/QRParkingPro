@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -31,39 +32,66 @@ fun InputEmail(email: String, onEmailChange: (String) -> Unit) {
         modifier = Modifier.fillMaxWidth()
     )
 }
-
 @Composable
-fun InputPassword(){
+fun InputPassword(
+    password: String,
+    onPasswordChange: (String) -> Unit,
+    placeholderText: String = "Password",
+    trailingIconPainter: Painter? = painterResource(R.drawable.blind_eye)
+) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         TextField(
-            value = "",
-            modifier = Modifier
-                .fillMaxWidth(),
-            leadingIcon = { Icon(Icons.Rounded.Lock, contentDescription = "Email Icon") },
+            value = password,
+            onValueChange = onPasswordChange,
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = { Icon(Icons.Rounded.Lock, contentDescription = "Password Icon") },
             trailingIcon = {
-                Icon(painter = painterResource(R.drawable.blind_eye),
-                    contentDescription = "Blind Icon", modifier = Modifier.size(25.dp))
+                if (trailingIconPainter != null) {
+                    Icon(
+                        painter = trailingIconPainter,
+                        contentDescription = "Trailing Icon",
+                        modifier = Modifier.size(25.dp)
+                    )
+                }
             },
-            onValueChange = { },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            placeholder = {
-                InputPlaceholder("Password")
-            }
+            placeholder = { Text(placeholderText) }
         )
     }
 }
-
-@Composable
-fun InputPassword(password: String, onPasswordChange: (String) -> Unit) {
-    TextField(
-        value = password,
-        onValueChange = onPasswordChange,
-        label = { Text("Password") },
-        visualTransformation = PasswordVisualTransformation(),
-        modifier = Modifier.fillMaxWidth()
-    )
-}
+//@Composable
+//fun InputPassword(){
+//    Row(verticalAlignment = Alignment.CenterVertically) {
+//        TextField(
+//            value = "",
+//            modifier = Modifier
+//                .fillMaxWidth(),
+//            leadingIcon = { Icon(Icons.Rounded.Lock, contentDescription = "Email Icon") },
+//            trailingIcon = {
+//                Icon(painter = painterResource(R.drawable.blind_eye),
+//                    contentDescription = "Blind Icon", modifier = Modifier.size(25.dp))
+//            },
+//            onValueChange = { },
+//            visualTransformation = PasswordVisualTransformation(),
+//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+//            placeholder = {
+//                InputPlaceholder("Password")
+//            }
+//        )
+//    }
+//}
+//
+//@Composable
+//fun InputPassword(password: String, onPasswordChange: (String) -> Unit) {
+//    TextField(
+//        value = password,
+//        onValueChange = onPasswordChange,
+//        label = { Text("Password") },
+//        visualTransformation = PasswordVisualTransformation(),
+//        modifier = Modifier.fillMaxWidth()
+//    )
+//}
 @Composable
 fun InputPlaceholder(message: String){
     Text(
