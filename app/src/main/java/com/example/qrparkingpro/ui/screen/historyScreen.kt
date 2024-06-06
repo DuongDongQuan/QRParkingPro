@@ -43,7 +43,6 @@ import com.example.qrparkingpro.model.HistoryItem
 import com.example.qrparkingpro.ui.components.HomeBottomBar
 import com.example.qrparkingpro.ui.components.TopBar
 import com.google.gson.Gson
-import com.example.qrparkingpro.ui.components.HomeBottomBar
 
 @Composable
 fun HistoryScreen(navController: NavController) {

@@ -34,8 +34,6 @@ import com.example.qrparkingpro.model.HistoryItem
 import com.example.qrparkingpro.ui.components.TopBar
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
 import com.example.qrparkingpro.vehicleListVM
-import com.example.qrparkingpro.viewmodel.VehicleListVM
-import com.google.type.Date
 
 @Composable
 fun TransactionDetailScreen(navController: NavController, transaction: HistoryItem) {
@@ -115,12 +113,7 @@ fun TransactionHeader(transaction: HistoryItem, selectedColor: Color) {
                 fontSize = 25.sp
             )
             Spacer(modifier = Modifier.height(4.dp))
-//            Text(
-//                text = transaction.amount,
-//                color = if (transaction.isIncome) Color.Green else Color.Red,
-//                fontWeight = FontWeight.Bold,
-//                fontSize = 29.sp
-//            )
+//
             Text(
                 text = transaction.amount,
                 color = when {
@@ -201,16 +194,7 @@ fun TransactionDescription(transaction: HistoryItem) {
 @Composable
 fun TransactionDetailItem(label: String, value: String, valueColor: Color = Color.Black) {
     val GreyText = Color(0xFF6C757D)
-//    vehicleListVM?.vehicles?.forEach {
-//        Row(
-//            modifier = Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.SpaceBetween
-//        ) {
-//            Text(it.type.name, fontSize = 18.sp)
-//            Text(it.plateNumber, fontSize = 18.sp)
-//        }
-//        Spacer(modifier = Modifier.height(8.dp))
-//    }
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween

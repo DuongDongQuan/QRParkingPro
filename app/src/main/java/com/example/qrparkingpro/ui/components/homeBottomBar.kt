@@ -83,26 +83,6 @@ fun BottomNavigationItem(
             .padding(10.dp)
             .clickable(onClick = onClick)
     ) {
-//        IconButton(
-//            onClick = onClick,
-//            modifier = Modifier
-//                .size(80.dp)
-//
-//        ) {
-//            Icon(
-//                painter = painterResource(id = icon),
-//                contentDescription = label,
-//                tint = if (isSelected) seclectedColor else Color.Gray,
-//                modifier = Modifier.size(if (isSelected) 130.dp else 130.dp)
-//            )
-//
-//        }
-//        Text(
-//            text = label,
-//            color = if (isSelected) Color(0xFF1877F2) else Color.Gray,
-//            fontSize = if (isSelected) 14.sp else 12.sp,
-//            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal)
-
         IconButton(
             onClick = onClick,
             modifier = Modifier

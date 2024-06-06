@@ -72,7 +72,7 @@ fun SignupPage(navController: NavController, loginViewModel: LoginViewModel = vi
                 modifier = Modifier
                     .size(250.dp)
                     .padding(top = 60.dp),
-                contentScale = ContentScale.Fit, // Hoặc ContentScale.Fit
+                contentScale = ContentScale.Fit,
                 alignment = Alignment.Center
             )
             Text(text = "QRParkingPro",

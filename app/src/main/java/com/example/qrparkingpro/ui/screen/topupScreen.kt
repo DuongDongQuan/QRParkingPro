@@ -1,10 +1,6 @@
 package com.example.qrparkingpro.ui.screen
 
-import android.graphics.Paint.Align
 import android.util.Log
-import androidx.activity.compose.BackHandler
-import androidx.annotation.FractionRes
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,33 +10,30 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.RadioButton
 import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Outline
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,28 +45,59 @@ import com.example.qrparkingpro.historyListVM
 import com.example.qrparkingpro.model.HistoryItem
 import com.example.qrparkingpro.ui.components.TopBar
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
+import androidx.compose.material.TabRowDefaults
+import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 
 @Composable
 fun TopUpWithdrawPage(option: Boolean) {
+    var selectedTab by remember { mutableStateOf("Top up") }
+    val selectedColor = Color(0xFF1877F2)
+
     Scaffold() { innerPadding ->
-        Column() {
+        Column(modifier = Modifier
+            .padding(innerPadding)
+            .fillMaxSize()
+            .fillMaxWidth()) {
             TopBar(
                 navController = rememberNavController(),
                 title = "Top Up/Withdraw"
             )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                verticalAlignment = Alignment.CenterVertically
+            TabRow(
+                selectedTabIndex = when (selectedTab) {
+                    "Top up" -> 0
+                    "Withdraw" -> 1
+                    else -> 0
+                },
+                backgroundColor = Color(0xFFFFFFFF),
+                contentColor = selectedColor,
+                indicator = { tabPositions ->
+                    TabRowDefaults.Indicator(
+                        Modifier.tabIndicatorOffset(tabPositions[when (selectedTab) {
+                            "Top up" -> 0
+                            "Withdraw" -> 1
+                            else -> 0
+                        }]),
+                        color = selectedColor
+                    )
+                }
             ) {
-                ButtonContainer(option, !option, 0.5f, false)
-                ButtonContainer(!option, option, 1f, true)
+                Tab(selected = selectedTab == "Top up", onClick = { selectedTab = "Top up" }) {
+                    Text("Top up", modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = if (selectedTab == "Top up") selectedColor else Color.Gray)
+                }
+                Tab(selected = selectedTab == "Withdraw", onClick = { selectedTab = "Withdraw" }) {
+                    Text("Withdraw", modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = if (selectedTab == "Withdraw") selectedColor else Color.Gray)
+                }
             }
-            ContentBody(innerPadding, option)
+
+            if (selectedTab == "Top up") {
+                ContentBody(innerPadding, option = false)
+            } else {
+                ContentBody(innerPadding, option = true)
+            }
         }
     }
-
 }
 
 @Composable
@@ -82,7 +106,7 @@ fun ContentBody(innerPadding: PaddingValues, option: Boolean) {
         modifier = Modifier
             .padding(innerPadding)
             .fillMaxSize()
-            .wrapContentWidth(align = Alignment.CenterHorizontally),
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         MoneyDisplay(option)
@@ -96,14 +120,9 @@ fun MoneyDisplay(option: Boolean) {
     Column(
         modifier = Modifier
             .padding(top = 40.dp)
-            .shadow(
-                elevation = 20.dp,
-                shape = RoundedCornerShape(15),
-                spotColor = Color.Black
-            )
             .background(color = Color.White)
-            .fillMaxWidth(0.7f)
-            .border(1.dp, color = Color.Black, shape = RoundedCornerShape(15))
+            .fillMaxWidth(0.85f)
+            .border(0.1.dp, color = Color.Gray, shape = RoundedCornerShape(8))
             .padding(horizontal = 15.dp, vertical = 10.dp)
     ) {
         BankInfo(option)
@@ -119,7 +138,7 @@ fun BankInfo(option: Boolean) {
         } else {
             textContent = "Top-up to"
         }
-        Text(text = textContent, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+        Text(text = textContent, fontSize = 18.sp, fontWeight = FontWeight.Bold)
         Box(modifier = Modifier.fillMaxWidth()) {
             Row(
                 modifier = Modifier
@@ -157,160 +176,78 @@ fun BankInfo(option: Boolean) {
 
 @Composable
 fun AmountDisplay() {
+    val amount = remember { mutableStateOf("") }
+
     Column(modifier = Modifier.padding(top = 10.dp)) {
-        Text(text = "Amount", fontSize = 15.sp, fontWeight = FontWeight.Bold)
+        Text(text = "Amount", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         BasicTextField(
-            value = "",
-            onValueChange = {},
+            value = amount.value,
+            onValueChange = { amount.value = it },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp)
+                .height(45.dp)
                 .border(
                     width = 1.dp,
                     color = Color.Gray.copy(alpha = 0.8f),
-                    shape = RoundedCornerShape(25)
+                    shape = RoundedCornerShape(8.dp)
                 )
+                .padding(8.dp)
         )
     }
 }
 
+
 @Composable
 fun FundSource() {
-    Column(modifier = Modifier
-        .fillMaxWidth(0.7f)
-        .padding(top = 40.dp)) {
+    var selectedOption by remember { mutableStateOf("") }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(0.85f)
+            .padding(top = 30.dp)
+    ) {
         FundTitle()
-        FundCategory("visa")
-        FundCategory("paypal")
-        FundCategory()
+        Spacer(modifier = Modifier.height(25.dp))
+        FundCategory("visa", isSelected = selectedOption == "visa") { selectedOption = "visa" }
+        FundCategory("paypal", isSelected = selectedOption == "paypal") { selectedOption = "paypal" }
     }
 }
+
 
 @Composable
 fun FundTitle() {
     Text(
         "Source of fund",
         modifier = Modifier.fillMaxWidth(),
+        fontSize = 22.sp,
         fontWeight = FontWeight.Bold
     )
 }
 
 @Composable
-fun FundCategory(item: String = "add") {
-    if (item == "visa") {
-        FundContainer("visa")
-    } else if (item == "paypal") {
-        FundContainer("paypal")
-    } else {
-        FundContainer()
+fun FundCategory(item: String = "add", isSelected: Boolean = false, onSelect: () -> Unit) {
+    when (item) {
+        "visa" -> FundContainer("visa", isSelected, onSelect)
+        "paypal" -> FundContainer("paypal", isSelected, onSelect)
+        else -> FundContainer(isSelected = isSelected, onSelect = onSelect)
     }
 }
-
 @Composable
-fun FundContainer(item: String = "add") {
-    if (item == "visa") {
-        Row(
-            modifier = Modifier
-                .padding(vertical = 10.dp)
-                .fillMaxWidth()
-                .height(50.dp)
-                .border(2.dp, Color.LightGray, shape = RoundedCornerShape(20)),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(start = 20.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.logos_visa),
-                    contentDescription = "visa logo",
-                    modifier = Modifier.size(30.dp)
-                )
-                Column() {
-                    Text(
-                        text = "VISA",
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Text(
-                        text = "Free of charge",
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-            }
-            CheckButton()
-        }
-    } else if (item == "paypal") {
-        Row(
-            modifier = Modifier
-                .padding(vertical = 10.dp)
-                .fillMaxWidth()
-                .height(50.dp)
-                .border(2.dp, Color.LightGray, shape = RoundedCornerShape(20)),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(start = 20.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(30.dp)
-                        .wrapContentSize(align = Alignment.Center)
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.logos_paypal),
-                        contentDescription = "paypal logo",
-                        modifier = Modifier.size(20.dp)
-                    )
-                }
-                Column() {
-                    Text(
-                        text = "Paypal",
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Text(
-                        text = "Free of charge",
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-            }
-            CheckButton()
-        }
-    } else {
-        AddFund()
-    }
-}
+fun FundContainer(item: String = "add", isSelected: Boolean = false, onSelect: () -> Unit) {
+    val heightModifier = Modifier
+        .padding(vertical = 8.dp)
+        .fillMaxWidth()
+        .height(56.dp)
+    val colored = Color(0xFF1877F2)
 
-@Composable
-fun CheckButton() {
-    Box(
-        modifier = Modifier
-            .padding(horizontal = 15.dp)
-            .size(15.dp)
-            .border(1.dp, color = Color.Black, shape = CircleShape)
-    )
-}
-
-@Composable
-fun AddFund() {
     Row(
-        modifier = Modifier
-            .padding(vertical = 10.dp)
-            .fillMaxWidth()
-            .height(50.dp)
-            .border(2.dp, Color.LightGray, shape = RoundedCornerShape(20)),
+        modifier = if (item == "add") heightModifier else heightModifier
+            .border(
+                if (isSelected) 2.dp else 1.dp,
+                if (isSelected) colored else Color.Gray,
+                RoundedCornerShape(8.dp)
+            )
+            .clickable(onClick = onSelect),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -321,22 +258,58 @@ fun AddFund() {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
+            val logoSize = 30.dp
+            val logo = when (item) {
+                "visa" -> R.drawable.logos_visa
+                "paypal" -> R.drawable.logos_paypal
+                else -> R.drawable.add_fund
+            }
             Image(
-                painter = painterResource(R.drawable.add_fund),
-                contentDescription = "visa logo",
-                modifier = Modifier.size(30.dp)
+                painter = painterResource(logo),
+                contentDescription = "$item logo",
+                modifier = Modifier.size(logoSize)
             )
             Column() {
-
+                val text = when (item) {
+                    "visa" -> "VISA"
+                    "paypal" -> "Paypal"
+                    else -> "Add Bank"
+                }
                 Text(
-                    text = "Add Bank",
-                    fontSize = 10.sp,
+                    text = text,
+                    fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold
                 )
+                if (item != "add") {
+                    Text(
+                        text = "Free of charge",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
             }
         }
-
+        if (item != "add") {
+            RadioButton(
+                selected = isSelected,
+                onClick = onSelect
+            )
+        }
     }
+}
+
+@Composable
+fun CheckButton(isSelected: Boolean = false) {
+    Box(
+        modifier = Modifier
+            .padding(horizontal = 15.dp)
+            .size(20.dp)
+            .border(
+                if (isSelected) 2.dp else 1.dp,
+                if (isSelected) Color.Blue else Color.Black,
+                shape = CircleShape
+            )
+    )
 }
 
 @Composable

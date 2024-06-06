@@ -36,7 +36,6 @@ import com.example.qrparkingpro.model.VehicleType
 import com.example.qrparkingpro.ui.components.TopBar
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
 import com.example.qrparkingpro.vehicleListVM
-import com.example.qrparkingpro.viewmodel.VehicleListVM
 import com.example.vehicleplate.ui.theme.GreyLine
 import com.example.vehicleplate.ui.theme.GreyText
 
@@ -53,7 +52,6 @@ fun RegisterVehicleScreen(
         imageUri = uri
     }
 
-    // Kiểm tra trạng thái của các trường
     val isFormValid by remember {
         derivedStateOf {
             vehicleNumber.isNotBlank() && imageUri != null
@@ -178,7 +176,7 @@ fun RegisterVehicleScreen(
                         navController.navigate("home")
                     }
                 },
-                enabled = isFormValid, // Nút chỉ kích hoạt khi form hợp lệ
+                enabled = isFormValid,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),

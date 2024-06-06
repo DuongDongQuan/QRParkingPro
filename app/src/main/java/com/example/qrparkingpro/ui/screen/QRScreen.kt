@@ -102,7 +102,7 @@ fun generateQRCode(content: String): Bitmap? {
     }
 }
 
-// Hàm tạo mã vạch
+// bar code
 fun generateBarcode(content: String): Bitmap? {
     val barcodeWriter = Code128Writer()
     return try {
@@ -114,7 +114,7 @@ fun generateBarcode(content: String): Bitmap? {
     }
 }
 
-// Hàm chuyển đổi BitMatrix thành Bitmap
+//  BitMatrix to Bitmap
 fun convertBitMatrixToBitmap(bitMatrix: BitMatrix): Bitmap {
     val width = bitMatrix.width
     val height = bitMatrix.height
@@ -127,7 +127,6 @@ fun convertBitMatrixToBitmap(bitMatrix: BitMatrix): Bitmap {
     return bitmap
 }
 
-// Tài nguyên giả để tránh lỗi
 object R {
     object drawable {
         const val back = 0
@@ -138,7 +137,6 @@ object R {
     }
 }
 
-// Hàm xem trước cho Composable
 @Preview(showBackground = true)
 @Composable
 fun PreviewQRScreen() {

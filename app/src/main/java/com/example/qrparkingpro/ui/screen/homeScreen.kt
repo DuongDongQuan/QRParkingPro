@@ -63,7 +63,6 @@ fun HomeScreen(navController: NavController) {
                     .padding(15.dp)
                     .padding(top = 20.dp)
             ) {
-                // Profile section
                 Box(
                     modifier = Modifier
                         .background(
@@ -75,7 +74,6 @@ fun HomeScreen(navController: NavController) {
                             color = Color.Gray,
                             shape = RoundedCornerShape(20.dp)
                         )
-//                        .shadow(2.dp, shape = RoundedCornerShape(20.dp))
                         .padding(horizontal = 15.dp, vertical = 11.dp),
                     contentAlignment = Alignment.Center
                 ) {
@@ -120,7 +118,7 @@ fun HomeScreen(navController: NavController) {
                                         RoundedCornerShape(8.dp)
                                     )
                                     .padding(horizontal = 8.dp, vertical = 4.dp)
-                                    .align(Alignment.CenterVertically) // Đảm bảo box nằm chính giữa
+                                    .align(Alignment.CenterVertically)
                             ) {
                                 Text(
                                     text = "Verified",
@@ -169,7 +167,7 @@ fun HomeScreen(navController: NavController) {
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.align(Alignment.CenterVertically)
                         )
-                        Spacer(modifier = Modifier.width(150.dp))
+                        Spacer(modifier = Modifier.width(170.dp))
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
@@ -190,7 +188,6 @@ fun HomeScreen(navController: NavController) {
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Action buttons
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
@@ -198,8 +195,7 @@ fun HomeScreen(navController: NavController) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         IconButton(
                             onClick = { navController.navigate("topup_withdraw") },
-                            //
-                            // Điều hướng tới màn hình Register Vehicle
+
                             modifier = Modifier
                                 .size(64.dp)
                                 .background(
@@ -208,7 +204,7 @@ fun HomeScreen(navController: NavController) {
                                 )
                         ) {
                             Icon(
-                                painter = painterResource(id = R.drawable.top_up), // Thay bằng biểu tượng của bạn
+                                painter = painterResource(id = R.drawable.top_up),
                                 contentDescription = "Top up/Withdraw",
                                 modifier = Modifier.size(45.dp),
                                 tint = Color.White
@@ -248,7 +244,6 @@ fun HomeScreen(navController: NavController) {
                 }
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Registered license plate section
                 Text(
                     text = "Registered license plate",
                     fontWeight = FontWeight.Bold,
