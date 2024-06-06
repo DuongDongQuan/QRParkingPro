@@ -14,8 +14,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -45,7 +47,7 @@ import com.example.vehicleplate.ui.theme.GreyLine
 @Composable
 fun HomeScreen(navController: NavController) {
     val GreenText = Color(0xFF60D936)
-
+    val scrollState = rememberScrollState()
     Scaffold(
         bottomBar = { HomeBottomBar(navController = navController) }
     ) { innerPadding ->
@@ -53,6 +55,7 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .verticalScroll(scrollState)
         ) {
             Column(
                 modifier = Modifier

@@ -52,6 +52,6 @@ class LoginViewModel : ViewModel() {
     }
 
     fun onSignup(navController: NavController) {
-        navController.navigate("login")
+        navController.navigate("home")
     }
 }

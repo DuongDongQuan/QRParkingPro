@@ -11,6 +11,7 @@ import com.example.qrparkingpro.ui.screens.TransactionDetailScreen
 import com.example.qrparkingpro.ui.screen.HistoryScreen
 import com.example.qrparkingpro.model.HistoryItem
 import com.example.qrparkingpro.ui.screen.LoginPage
+import com.example.qrparkingpro.ui.screen.QRScreen
 import com.example.qrparkingpro.ui.screen.SignupPage
 import com.example.qrparkingpro.ui.screen.TopUpWithdrawPage
 import com.google.gson.Gson
