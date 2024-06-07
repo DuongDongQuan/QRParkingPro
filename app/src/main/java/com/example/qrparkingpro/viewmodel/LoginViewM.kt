@@ -18,9 +18,24 @@ class LoginViewModel : ViewModel() {
     private val _isFormValid = MutableStateFlow(false)
     val isFormValid: StateFlow<Boolean> = _isFormValid
 
-    //validateFormLogin
     private val _isFormValidLogin = MutableStateFlow(false)
     val isFormValidLogin: StateFlow<Boolean> = _isFormValidLogin
+
+    private val _username = MutableStateFlow("")
+    val username: StateFlow<String> = _username
+
+    private val _phone = MutableStateFlow("")
+    val phone: StateFlow<String> = _phone
+
+    fun onUsernameChange(newUsername: String) {
+        _username.value = newUsername
+        validateForm()
+    }
+
+    fun onPhoneChange(newPhone: String) {
+        _phone.value = newPhone
+        validateForm()
+    }
     fun onEmailChange(newEmail: String) {
         _email.value = newEmail
         validateForm()

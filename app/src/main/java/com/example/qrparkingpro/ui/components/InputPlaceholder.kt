@@ -22,6 +22,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.example.qrparkingpro.R
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun InputEmail(email: String, onEmailChange: (String) -> Unit) {
@@ -29,7 +31,8 @@ fun InputEmail(email: String, onEmailChange: (String) -> Unit) {
         value = email,
         onValueChange = onEmailChange,
         label = { Text("Email") },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        textStyle = TextStyle(fontSize = 18.sp)
     )
 }
 @Composable
@@ -56,42 +59,35 @@ fun InputPassword(
             },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            placeholder = { Text(placeholderText) }
+            placeholder = { Text(placeholderText) },
+            textStyle = TextStyle(fontSize = 18.sp)
         )
     }
 }
-//@Composable
-//fun InputPassword(){
-//    Row(verticalAlignment = Alignment.CenterVertically) {
-//        TextField(
-//            value = "",
-//            modifier = Modifier
-//                .fillMaxWidth(),
-//            leadingIcon = { Icon(Icons.Rounded.Lock, contentDescription = "Email Icon") },
-//            trailingIcon = {
-//                Icon(painter = painterResource(R.drawable.blind_eye),
-//                    contentDescription = "Blind Icon", modifier = Modifier.size(25.dp))
-//            },
-//            onValueChange = { },
-//            visualTransformation = PasswordVisualTransformation(),
-//            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-//            placeholder = {
-//                InputPlaceholder("Password")
-//            }
-//        )
-//    }
-//}
-//
-//@Composable
-//fun InputPassword(password: String, onPasswordChange: (String) -> Unit) {
-//    TextField(
-//        value = password,
-//        onValueChange = onPasswordChange,
-//        label = { Text("Password") },
-//        visualTransformation = PasswordVisualTransformation(),
-//        modifier = Modifier.fillMaxWidth()
-//    )
-//}
+
+@Composable
+fun InputUsername(username: String, onUsernameChange: (String) -> Unit) {
+    TextField(
+        value = username,
+        onValueChange = onUsernameChange,
+        label = { Text("Username") },
+        modifier = Modifier.fillMaxWidth(),
+        textStyle = TextStyle(fontSize = 18.sp)
+    )
+}
+
+@Composable
+fun InputPhoneNumber(phone: String, onPhoneChange: (String) -> Unit) {
+    TextField(
+        value = phone,
+        onValueChange = onPhoneChange,
+        label = { Text("Phone number") },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+        modifier = Modifier.fillMaxWidth(),
+        textStyle = TextStyle(fontSize = 18.sp)
+    )
+}
+
 @Composable
 fun InputPlaceholder(message: String){
     Text(

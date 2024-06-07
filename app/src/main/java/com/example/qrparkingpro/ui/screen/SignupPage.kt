@@ -51,14 +51,16 @@ import com.example.vehicleplate.ui.theme.LightGray40
 import com.example.vehicleplate.ui.theme.SkyBlue40
 import com.example.vehicleplate.ui.theme.SkyBlue60
 import com.example.vehicleplate.ui.theme.SkyBlue80
-
+import com.example.qrparkingpro.ui.components.InputUsername
+import com.example.qrparkingpro.ui.components.InputPhoneNumber
 @Composable
 fun SignupPage(navController: NavController, loginViewModel: LoginViewModel = viewModel()) {
     val email by loginViewModel.email.collectAsState()
     val password by loginViewModel.password.collectAsState()
     val passwordConfirm by loginViewModel.passwordConfirm.collectAsState()
     val isFormValid by loginViewModel.isFormValid.collectAsState()
-
+    val username by loginViewModel.username.collectAsState() // Added state for Username
+    val phone by loginViewModel.phone.collectAsState()
 
 
     Card(modifier = Modifier.fillMaxWidth(),
@@ -70,18 +72,20 @@ fun SignupPage(navController: NavController, loginViewModel: LoginViewModel = vi
                 painter = painterResource(R.drawable.logo2),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(250.dp)
-                    .padding(top = 60.dp),
+                    .size(200.dp)
+                    .padding(top = 20.dp),
                 contentScale = ContentScale.Fit,
                 alignment = Alignment.Center
             )
             Text(text = "QRParkingPro",
-                modifier = Modifier.padding(top = 15.dp),
+                modifier = Modifier.padding(top = 10.dp),
                 color = SkyBlue40,
                 fontFamily = FontFamily(Font(R.font.inriaserif_bold, FontWeight.Normal)),
                 fontSize = 28.sp
             )
             Spacer(modifier = Modifier.height(30.dp))
+            InputUsername(username = username, onUsernameChange = loginViewModel::onUsernameChange)
+            InputPhoneNumber(phone = phone, onPhoneChange = loginViewModel::onPhoneChange)
 
             InputEmail(email = email, onEmailChange = loginViewModel::onEmailChange)
             InputPasswordConfirm(password = password, passwordConfirm = passwordConfirm,
