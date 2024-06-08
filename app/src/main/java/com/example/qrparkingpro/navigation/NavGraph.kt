@@ -18,7 +18,7 @@ import com.google.gson.Gson
 
 @Composable
 fun NavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "home") {
+    NavHost(navController = navController, startDestination = "login") {
         composable("login") { LoginPage(navController = navController) }
         composable("signup") { SignupPage(navController = navController) }
         composable("home") {

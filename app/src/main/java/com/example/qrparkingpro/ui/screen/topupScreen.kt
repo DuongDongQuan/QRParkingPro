@@ -190,7 +190,7 @@ fun BankInfo(option: Boolean) {
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = "100$",
+                        text = "Brian Duong",
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Bold
                     )

@@ -23,7 +23,7 @@ class HistoryListVM : ViewModel() {
                 OptionSource.PAYPAL
             ),
             TopUpItem(
-                "Withdraw to paypal", "2024-06-07", "-50$", "50$",
+                "Withdraw funds from the app", "2024-06-07", "-50$", "50$",
                 false, OptionSource.PAYPAL
             ),
         )

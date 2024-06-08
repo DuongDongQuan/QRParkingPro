@@ -162,7 +162,7 @@ fun HomeScreen(navController: NavController) {
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "100$",
+                            text = "*** $",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.align(Alignment.CenterVertically)
