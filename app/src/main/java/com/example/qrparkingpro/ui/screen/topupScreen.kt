@@ -50,6 +50,7 @@ import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavController
 import com.example.qrparkingpro.MainActivity
 import com.example.qrparkingpro.model.OptionSource
@@ -377,7 +378,12 @@ fun SubmitAction(option: Boolean, navController: NavController) {
             topUpVM?.setAmount(amount)
             topUpVM?.setIsIncome(!option)
             topUpVM?.setDate()
-            topUpVM?.setDescription("Add funds to the app")
+            if (option) {
+                topUpVM?.setDescription("Withdraw funds from the app")
+            } else {
+                topUpVM?.setDescription("Add funds to the app")
+            }
+           // topUpVM?.setDescription("Add funds to the app")
             val topUpItem = topUpVM?.topUpData?.value
             historyListVM?.addHistoryItem(topUpItem!!)
             Log.d("History List", historyListVM?.historyItems.toString())
