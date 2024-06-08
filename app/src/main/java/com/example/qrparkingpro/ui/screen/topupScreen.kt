@@ -1,6 +1,8 @@
 package com.example.qrparkingpro.ui.screen
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -42,7 +44,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.example.qrparkingpro.R
 import com.example.qrparkingpro.historyListVM
-import com.example.qrparkingpro.model.HistoryItem
 import com.example.qrparkingpro.ui.components.TopBar
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
 import androidx.compose.material.Tab
@@ -50,6 +51,9 @@ import androidx.compose.material.TabRow
 import androidx.compose.material.TabRowDefaults
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
 import androidx.navigation.NavController
+import com.example.qrparkingpro.MainActivity
+import com.example.qrparkingpro.model.OptionSource
+import com.example.qrparkingpro.topUpVM
 
 @Composable
 fun TopUpWithdrawPage(option: Boolean) {
@@ -57,10 +61,12 @@ fun TopUpWithdrawPage(option: Boolean) {
     val selectedColor = Color(0xFF1877F2)
 
     Scaffold() { innerPadding ->
-        Column(modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxSize()
-            .fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+                .fillMaxWidth()
+        ) {
             TopBar(
                 navController = rememberNavController(),
                 title = "Top Up/Withdraw"
@@ -75,20 +81,38 @@ fun TopUpWithdrawPage(option: Boolean) {
                 contentColor = selectedColor,
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
-                        Modifier.tabIndicatorOffset(tabPositions[when (selectedTab) {
-                            "Top up" -> 0
-                            "Withdraw" -> 1
-                            else -> 0
-                        }]),
+                        Modifier.tabIndicatorOffset(
+                            tabPositions[when (selectedTab) {
+                                "Top up" -> 0
+                                "Withdraw" -> 1
+                                else -> 0
+                            }]
+                        ),
                         color = selectedColor
                     )
                 }
             ) {
-                Tab(selected = selectedTab == "Top up", onClick = { selectedTab = "Top up" }) {
-                    Text("Top up", modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = if (selectedTab == "Top up") selectedColor else Color.Gray)
+                Tab(
+                    selected = selectedTab == "Top up",
+                    onClick = { selectedTab = "Top up" }) {
+                    Text(
+                        "Top up",
+                        modifier = Modifier.padding(16.dp),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = if (selectedTab == "Top up") selectedColor else Color.Gray
+                    )
                 }
-                Tab(selected = selectedTab == "Withdraw", onClick = { selectedTab = "Withdraw" }) {
-                    Text("Withdraw", modifier = Modifier.padding(16.dp), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = if (selectedTab == "Withdraw") selectedColor else Color.Gray)
+                Tab(
+                    selected = selectedTab == "Withdraw",
+                    onClick = { selectedTab = "Withdraw" }) {
+                    Text(
+                        "Withdraw",
+                        modifier = Modifier.padding(16.dp),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = if (selectedTab == "Withdraw") selectedColor else Color.Gray
+                    )
                 }
             }
 
@@ -184,7 +208,10 @@ fun AmountDisplay() {
         Text(text = "Amount", fontSize = 18.sp, fontWeight = FontWeight.Bold)
         BasicTextField(
             value = amount.value,
-            onValueChange = { amount.value = it },
+            onValueChange = {
+                amount.value = it
+                topUpVM?.setBalance("$it$")
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(45.dp)
@@ -210,8 +237,20 @@ fun FundSource() {
     ) {
         FundTitle()
         Spacer(modifier = Modifier.height(25.dp))
-        FundCategory("visa", isSelected = selectedOption == "visa") { selectedOption = "visa" }
-        FundCategory("paypal", isSelected = selectedOption == "paypal") { selectedOption = "paypal" }
+        FundCategory(
+            "visa",
+            isSelected = selectedOption == "visa"
+        ) {
+            selectedOption = "visa"
+            topUpVM?.setSource(OptionSource.VISA)
+        }
+        FundCategory(
+            "paypal",
+            isSelected = selectedOption == "paypal"
+        ) {
+            selectedOption = "paypal"
+            topUpVM?.setSource(OptionSource.PAYPAL)
+        }
     }
 }
 
@@ -227,15 +266,24 @@ fun FundTitle() {
 }
 
 @Composable
-fun FundCategory(item: String = "add", isSelected: Boolean = false, onSelect: () -> Unit) {
+fun FundCategory(
+    item: String = "add",
+    isSelected: Boolean = false,
+    onSelect: () -> Unit
+) {
     when (item) {
         "visa" -> FundContainer("visa", isSelected, onSelect)
         "paypal" -> FundContainer("paypal", isSelected, onSelect)
         else -> FundContainer(isSelected = isSelected, onSelect = onSelect)
     }
 }
+
 @Composable
-fun FundContainer(item: String = "add", isSelected: Boolean = false, onSelect: () -> Unit) {
+fun FundContainer(
+    item: String = "add",
+    isSelected: Boolean = false,
+    onSelect: () -> Unit
+) {
     val heightModifier = Modifier
         .padding(vertical = 8.dp)
         .fillMaxWidth()
@@ -314,6 +362,7 @@ fun CheckButton(isSelected: Boolean = false) {
     )
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SubmitAction(option: Boolean, navController: NavController) {
     val text: String
@@ -324,13 +373,15 @@ fun SubmitAction(option: Boolean, navController: NavController) {
     }
     Button(
         onClick = {
-            val newHistoryItem = HistoryItem(
-                "Add funds to the app", "2024-07-06", "+300$",
-                "300$", true
-            )
-            historyListVM?.addHistoryItem(newHistoryItem)
+            val amount = (if (option) "-" else "+") + topUpVM?.topUpData?.value?.balance
+            topUpVM?.setAmount(amount)
+            topUpVM?.setIsIncome(!option)
+            topUpVM?.setDate()
+            topUpVM?.setDescription("Add funds to the app")
+            val topUpItem = topUpVM?.topUpData?.value
+            historyListVM?.addHistoryItem(topUpItem!!)
             Log.d("History List", historyListVM?.historyItems.toString())
-            navController.navigate("home")
+            MainActivity.navController?.navigate("home")
         },
         modifier = Modifier
             .padding(40.dp)

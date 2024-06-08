@@ -39,7 +39,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.qrparkingpro.R
 import com.example.qrparkingpro.historyListVM
-import com.example.qrparkingpro.model.HistoryItem
+import com.example.qrparkingpro.model.TopUpItem
 import com.example.qrparkingpro.ui.components.HomeBottomBar
 import com.example.qrparkingpro.ui.components.TopBar
 import com.google.gson.Gson
@@ -102,7 +102,7 @@ fun HistoryScreen(navController: NavController) {
 }
 
 @Composable
-fun HistoryListItem(item: HistoryItem, navController: NavController) {
+fun HistoryListItem(item: TopUpItem, navController: NavController) {
     val iconColor = Color(0xFF1877F2)
     Column(modifier = Modifier
         .fillMaxWidth()

@@ -9,7 +9,7 @@ import com.example.qrparkingpro.ui.screen.HomeScreen
 import com.example.qrparkingpro.ui.screen.RegisterVehicleScreen
 import com.example.qrparkingpro.ui.screens.TransactionDetailScreen
 import com.example.qrparkingpro.ui.screen.HistoryScreen
-import com.example.qrparkingpro.model.HistoryItem
+import com.example.qrparkingpro.model.TopUpItem
 import com.example.qrparkingpro.ui.screen.LoginPage
 import com.example.qrparkingpro.ui.screen.QRScreen
 import com.example.qrparkingpro.ui.screen.SignupPage
@@ -18,7 +18,7 @@ import com.google.gson.Gson
 
 @Composable
 fun NavGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "login") {
+    NavHost(navController = navController, startDestination = "home") {
         composable("login") { LoginPage(navController = navController) }
         composable("signup") { SignupPage(navController = navController) }
         composable("home") {
@@ -43,7 +43,7 @@ fun NavGraph(navController: NavHostController) {
             })
         ) { backStackEntry ->
             val json = backStackEntry.arguments?.getString("transaction")
-            val transaction = Gson().fromJson(json, HistoryItem::class.java)
+            val transaction = Gson().fromJson(json, TopUpItem::class.java)
             TransactionDetailScreen(
                 navController = navController,
                 transaction = transaction

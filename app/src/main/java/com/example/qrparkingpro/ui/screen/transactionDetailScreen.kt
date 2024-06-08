@@ -30,15 +30,24 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.qrparkingpro.R
-import com.example.qrparkingpro.model.HistoryItem
+import com.example.qrparkingpro.model.OptionSource
+import com.example.qrparkingpro.model.TopUpItem
 import com.example.qrparkingpro.ui.components.TopBar
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
 import com.example.qrparkingpro.vehicleListVM
 
 @Composable
-fun TransactionDetailScreen(navController: NavController, transaction: HistoryItem) {
+fun TransactionDetailScreen(
+    navController: NavController,
+    transaction: TopUpItem
+) {
     Scaffold(
-        topBar = { TopBar(navController = navController, title = "Transaction Detail")}
+        topBar = {
+            TopBar(
+                navController = navController,
+                title = "Transaction Detail"
+            )
+        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -54,7 +63,7 @@ fun TransactionDetailScreen(navController: NavController, transaction: HistoryIt
 }
 
 @Composable
-fun TransactionInfoCard(transaction: HistoryItem) {
+fun TransactionInfoCard(transaction: TopUpItem) {
     val selectedColor = Color(0xFF1877F2)
     val GreenText = Color(0xFF60D936)
     Column(
@@ -70,24 +79,45 @@ fun TransactionInfoCard(transaction: HistoryItem) {
         Column(
             modifier = Modifier
                 .background(Color.White, shape = RoundedCornerShape(12.dp))
-                .border(width = 0.1.dp, color = Color.Gray, shape = RoundedCornerShape(12.dp))
-                .padding(9.dp)
-                ,
+                .border(
+                    width = 0.1.dp,
+                    color = Color.Gray,
+                    shape = RoundedCornerShape(12.dp)
+                )
+                .padding(9.dp),
             horizontalAlignment = Alignment.Start
-        ){
-        TransactionDetailItem(label = "Status", value = "successful", valueColor = GreenText)
-        TransactionDetailItem(label = "Created time", value = transaction.date, valueColor = selectedColor)
-        TransactionDetailItem(label = "Account/Card", value = "Paypal", valueColor = selectedColor)
-        TransactionDetailItem(label = "Total fee", value = "Free of charge", valueColor = selectedColor)
+        ) {
+            TransactionDetailItem(
+                label = "Status",
+                value = "successful",
+                valueColor = GreenText
+            )
+            TransactionDetailItem(
+                label = "Created time",
+                value = transaction.date,
+                valueColor = selectedColor
+            )
+            TransactionDetailItem(
+                label = "Account/Card", value = transaction
+                    .source.name,
+                valueColor =
+                selectedColor
+            )
+            TransactionDetailItem(
+                label = "Total fee",
+                value = "Free of charge",
+                valueColor = selectedColor
+            )
         }
     }
 }
 
 @Composable
-fun TransactionHeader(transaction: HistoryItem, selectedColor: Color) {
+fun TransactionHeader(transaction: TopUpItem, selectedColor: Color) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(top = 22.dp)
 
     ) {
@@ -129,7 +159,7 @@ fun TransactionHeader(transaction: HistoryItem, selectedColor: Color) {
 }
 
 @Composable
-fun TransactionDescription(transaction: HistoryItem) {
+fun TransactionDescription(transaction: TopUpItem) {
     val selectedColor = Color(0xFF1877F2)
     if (transaction.description == "Pay parking fee") {
         Text(
@@ -151,13 +181,19 @@ fun TransactionDescription(transaction: HistoryItem) {
             Column(
                 modifier = Modifier
                     .background(Color.White, shape = RoundedCornerShape(12.dp))
-                    .border(width = 0.1.dp, color = Color.Gray, shape = RoundedCornerShape(12.dp))
+                    .border(
+                        width = 0.1.dp,
+                        color = Color.Gray,
+                        shape = RoundedCornerShape(12.dp)
+                    )
                     .padding(9.dp),
                 horizontalAlignment = Alignment.Start
             ) {
                 TransactionDetailItem(
                     label = "License plate",
-                    value = vehicleListVM?.vehicles?.firstOrNull()?.plateNumber?.take(8) ?: "",
+                    value = vehicleListVM?.vehicles?.firstOrNull()?.plateNumber?.take(
+                        8
+                    ) ?: "",
                     valueColor = selectedColor
                 )
                 TransactionDetailItem(
@@ -192,7 +228,11 @@ fun TransactionDescription(transaction: HistoryItem) {
 
 
 @Composable
-fun TransactionDetailItem(label: String, value: String, valueColor: Color = Color.Black) {
+fun TransactionDetailItem(
+    label: String,
+    value: String,
+    valueColor: Color = Color.Black
+) {
     val GreyText = Color(0xFF6C757D)
 
     Row(
@@ -219,16 +259,20 @@ fun TransactionDetailItem(label: String, value: String, valueColor: Color = Colo
 @Composable
 fun PreviewTransactionDetailScreen() {
     val navController = rememberNavController()
-    val sampleTransaction = HistoryItem(
+    val sampleTransaction = TopUpItem(
         description = "Pay parking fee",
 //         description = "Add funds to the app",
         date = "10:00 a.m - 20/3/2024",
         amount = "-1$",
 //         amount = "+20$",
         balance = "80$",
-        isIncome = false
+        isIncome = false,
+        source = OptionSource.PAYPAL
     )
     QRParkingProTheme {
-        TransactionDetailScreen(navController = navController, transaction = sampleTransaction)
+        TransactionDetailScreen(
+            navController = navController,
+            transaction = sampleTransaction
+        )
     }
 }
