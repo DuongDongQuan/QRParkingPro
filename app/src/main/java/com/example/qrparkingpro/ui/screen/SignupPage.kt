@@ -43,6 +43,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.qrparkingpro.R
+import com.example.qrparkingpro.model.User
 import com.example.qrparkingpro.ui.components.InputEmail
 import com.example.qrparkingpro.ui.components.InputPassword
 import com.example.qrparkingpro.ui.components.InputPasswordConfirm
@@ -53,8 +54,12 @@ import com.example.vehicleplate.ui.theme.SkyBlue60
 import com.example.vehicleplate.ui.theme.SkyBlue80
 import com.example.qrparkingpro.ui.components.InputUsername
 import com.example.qrparkingpro.ui.components.InputPhoneNumber
+
 @Composable
-fun SignupPage(navController: NavController, loginViewModel: LoginViewModel = viewModel()) {
+fun SignupPage(
+    navController: NavController,
+    loginViewModel: LoginViewModel = viewModel()
+) {
     val email by loginViewModel.email.collectAsState()
     val password by loginViewModel.password.collectAsState()
     val passwordConfirm by loginViewModel.passwordConfirm.collectAsState()
@@ -63,11 +68,17 @@ fun SignupPage(navController: NavController, loginViewModel: LoginViewModel = vi
     val phone by loginViewModel.phone.collectAsState()
 
 
-    Card(modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+    ) {
         ReturnPage(navController)
-        Column(modifier = Modifier.padding(start = 30.dp, end = 30.dp).fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(
+            modifier = Modifier
+                .padding(start = 30.dp, end = 30.dp)
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Image(
                 painter = painterResource(R.drawable.logo2),
                 contentDescription = null,
@@ -77,22 +88,44 @@ fun SignupPage(navController: NavController, loginViewModel: LoginViewModel = vi
                 contentScale = ContentScale.Fit,
                 alignment = Alignment.Center
             )
-            Text(text = "QRParkingPro",
+            Text(
+                text = "QRParkingPro",
                 modifier = Modifier.padding(top = 10.dp),
                 color = SkyBlue40,
-                fontFamily = FontFamily(Font(R.font.inriaserif_bold, FontWeight.Normal)),
+                fontFamily = FontFamily(
+                    Font(
+                        R.font.inriaserif_bold,
+                        FontWeight.Normal
+                    )
+                ),
                 fontSize = 28.sp
             )
             Spacer(modifier = Modifier.height(30.dp))
-            InputUsername(username = username, onUsernameChange = loginViewModel::onUsernameChange)
-            InputPhoneNumber(phone = phone, onPhoneChange = loginViewModel::onPhoneChange)
+            InputUsername(
+                username = username,
+                onUsernameChange = loginViewModel::onUsernameChange
+            )
+            InputPhoneNumber(
+                phone = phone,
+                onPhoneChange = loginViewModel::onPhoneChange
+            )
 
-            InputEmail(email = email, onEmailChange = loginViewModel::onEmailChange)
-            InputPasswordConfirm(password = password, passwordConfirm = passwordConfirm,
-                onPasswordChange = loginViewModel::onPasswordChange, onPasswordConfirmChange = loginViewModel::onPasswordConfirmChange)
+            InputEmail(
+                email = email,
+                onEmailChange = loginViewModel::onEmailChange
+            )
+            InputPasswordConfirm(
+                password = password,
+                passwordConfirm = passwordConfirm,
+                onPasswordChange = loginViewModel::onPasswordChange,
+                onPasswordConfirmChange = loginViewModel::onPasswordConfirmChange
+            )
             val buttonColor = Color(0xFF1877F2)
             Button(
-                onClick = { loginViewModel.onSignup(navController) },
+                onClick = {
+                    val user = User(username, phone)
+                    loginViewModel.onSignup(navController, user)
+                },
                 enabled = isFormValid,
                 modifier = Modifier
                     .padding(top = 40.dp, bottom = 20.dp)
@@ -101,32 +134,47 @@ fun SignupPage(navController: NavController, loginViewModel: LoginViewModel = vi
                 colors = ButtonDefaults.buttonColors(containerColor = buttonColor),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Text(text = "Register", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                Text(
+                    text = "Register",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
             }
 
         }
     }
 }
+
 @Composable
-fun ReturnPage(navController: NavController){
+fun ReturnPage(navController: NavController) {
     val selectedColor = Color(0xFF4895EF)
 
     Card(
         modifier = Modifier
-            .padding(top = 20.dp,start = 6.dp)
-            .wrapContentSize(align = Alignment.TopStart)) {
-        Row(modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically) {
+            .padding(top = 20.dp, start = 6.dp)
+            .wrapContentSize(align = Alignment.TopStart)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             IconButton(
                 onClick = { navController.popBackStack() },
-                modifier = Modifier.align(Alignment.CenterVertically)            ) {
+                modifier = Modifier.align(Alignment.CenterVertically)
+            ) {
                 androidx.compose.material.Icon(
                     painter = painterResource(id = R.drawable.back),
                     contentDescription = "Back",
                     tint = selectedColor
                 )
             }
-            Text(text = "Sign Up", color = selectedColor, fontSize = 27.sp, fontWeight = FontWeight.Bold)
+            Text(
+                text = "Sign Up",
+                color = selectedColor,
+                fontSize = 27.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }

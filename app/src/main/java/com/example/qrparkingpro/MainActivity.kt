@@ -10,11 +10,13 @@ import com.example.qrparkingpro.navigation.NavGraph
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
 import com.example.qrparkingpro.viewmodel.HistoryListVM
 import com.example.qrparkingpro.viewmodel.TopUpVM
+import com.example.qrparkingpro.viewmodel.UserVM
 import com.example.qrparkingpro.viewmodel.VehicleListVM
 
 var vehicleListVM: VehicleListVM? = null
 var historyListVM: HistoryListVM? = null
 var topUpVM: TopUpVM? = null
+var userVM: UserVM? = null
 
 class MainActivity : ComponentActivity() {
     companion object {
@@ -25,6 +27,7 @@ class MainActivity : ComponentActivity() {
         vehicleListVM = VehicleListVM()
         historyListVM = HistoryListVM()
         topUpVM = TopUpVM()
+        userVM = UserVM()
         setContent {
             navController = rememberNavController()
             QRParkingProTheme {

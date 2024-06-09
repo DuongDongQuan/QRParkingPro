@@ -40,6 +40,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.qrparkingpro.R
 import com.example.qrparkingpro.ui.components.HomeBottomBar
 import com.example.qrparkingpro.ui.theme.QRParkingProTheme
+import com.example.qrparkingpro.userVM
 import com.example.qrparkingpro.vehicleListVM
 import com.example.qrparkingpro.viewmodel.VehicleListVM
 import com.example.vehicleplate.ui.theme.GreyLine
@@ -94,7 +95,7 @@ fun HomeScreen(navController: NavController) {
                             )
                         }
                         Text(
-                            text = "BRIAN DUONG",
+                            text = userVM?.userData?.value?.username.toString(),
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -105,7 +106,7 @@ fun HomeScreen(navController: NavController) {
                             modifier = Modifier.align(Alignment.CenterHorizontally)
                         ) {
                             Text(
-                                text = "0707405997",
+                                text = userVM?.userData?.value?.phone.toString(),
                                 fontSize = 16.sp,
                                 color = Color.Gray,
                                 modifier = Modifier.align(Alignment.CenterVertically)

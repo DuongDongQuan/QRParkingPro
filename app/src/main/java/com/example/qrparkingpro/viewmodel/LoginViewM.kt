@@ -2,6 +2,8 @@ package com.example.qrparkingpro.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
+import com.example.qrparkingpro.model.User
+import com.example.qrparkingpro.userVM
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -66,7 +68,8 @@ class LoginViewModel : ViewModel() {
 
     }
 
-    fun onSignup(navController: NavController) {
+    fun onSignup(navController: NavController, user: User) {
+        userVM?.setUser(user)
         navController.navigate("home")
     }
 }
